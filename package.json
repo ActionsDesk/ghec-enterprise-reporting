@@ -50,10 +50,10 @@
     "typescript": "^3.9.7"
   },
   "lint-staged": {
-    "*.{js,md}": [
+    "*.{ts,js,md}": [
       "npm run format"
     ],
-    "*.js": [
+    "*.{ts,js}": [
       "npm run lint"
     ]
   },
