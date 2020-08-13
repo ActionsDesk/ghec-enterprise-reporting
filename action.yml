@@ -1,11 +1,14 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'ghec-enterprise-reporting'
+description: 'Action to report GHEC enterprise account billing information in an issue.'
+author: 'GitHub Professional Services <https://services.github.com>'
 inputs:
-  milliseconds: # change this
+  enterprise:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'The enterprise to query in slug format. Eg. github'
+  title:
+    required: false
+    description: 'Enterprise billing report title to add to the out issue.'
+    default: 'GHEC Usage Report'
 runs:
   using: 'node12'
   main: 'dist/index.js'
