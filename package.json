@@ -25,7 +25,12 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.4"
+    "@actions/core": "^1.2.4",
+    "@actions/github": "^4.0.0",
+    "@octokit/plugin-enterprise-cloud": "^4.2.0",
+    "@octokit/plugin-throttling": "^3.3.0",
+    "eta": "^1.2.2",
+    "moment": "^2.27.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.8",
@@ -35,11 +40,28 @@
     "eslint": "^7.6.0",
     "eslint-plugin-github": "^4.1.1",
     "eslint-plugin-jest": "^23.20.0",
+    "husky": "^4.2.5",
     "jest": "^26.2.2",
     "jest-circus": "^26.2.2",
     "js-yaml": "^3.14.0",
+    "lint-staged": "^10.2.11",
     "prettier": "2.0.5",
     "ts-jest": "^26.1.4",
     "typescript": "^3.9.7"
+  },
+  "lint-staged": {
+    "*.{js,md}": [
+      "npm run format",
+      "git add"
+    ],
+    "*.js": [
+      "npm run lint",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
