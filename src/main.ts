@@ -1,19 +1,46 @@
-import * as core from '@actions/core'
-import {wait} from './wait'
+import * as core from '@actions/core';
+import * as github from '@actions/github';
+import moment from 'moment';
+import {generateReport, getEnterpriseBillingData, getEnterpriseOrgsData} from './utils';
+import {Organization} from './types';
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+    if (!process.env.ENTERPRISE_TOKEN) {
+      throw new Error('Environment variable ENTERPRISE_TOKEN is required. Please take a look at your workflow file.');
+    }
+    if (!process.env.GITHUB_TOKEN) {
+      throw new Error(
+        'Environment variable GITHUB_TOKEN with enterprise access is required. Please take a look at your workflow file.'
+      );
+    }
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    const enterpriseToken: string = process.env.ENTERPRISE_TOKEN || '';
+    const repoToken: string = process.env.GITHUB_TOKEN || '';
+    const enterprise: string = core.getInput('enterprise');
+    const enterpriseOrgs: Organization[] = [];
+    const reportDate = moment().format('MMMM DD, YYYY');
+    let title: string = core.getInput('title');
 
-    core.setOutput('time', new Date().toTimeString())
+    title = `${title} - ${reportDate}`;
+
+    for await (const org of getEnterpriseOrgsData(enterpriseToken, enterprise)) {
+      enterpriseOrgs.push(org);
+    }
+    const enterpriseBillingData = await getEnterpriseBillingData(enterpriseToken, enterprise);
+
+    const octokit = github.getOctokit(repoToken);
+    const body = generateReport(title, enterprise, enterpriseOrgs, enterpriseBillingData);
+
+    await octokit.issues.create({
+      owner: github.context.repo.owner,
+      repo: github.context.repo.repo,
+      title,
+      body
+    });
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed(error.message);
   }
 }
 
-run()
+run();
