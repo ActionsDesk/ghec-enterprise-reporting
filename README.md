@@ -1,101 +1,49 @@
-<p align="center">
-  <a href="https://github.com/actions/typescript-action/actions"><img alt="typescript-action status" src="https://github.com/actions/typescript-action/workflows/build-test/badge.svg"></a>
-</p>
+# GHEC billing and usage reporting
 
-# Create a JavaScript Action using TypeScript
+This action extracts billing and usage numbers from an enterprise and creates a report as a GitHub issue in the repository where it is running.
 
-Use this template to bootstrap the creation of a TypeScript action.:rocket:
+## Inputs and environment variables
 
-This template includes compilation support, tests, a validation workflow, publishing, and versioning guidance.  
+### Inputs
 
-If you are new, there's also a simpler introduction.  See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
+- **enterprise**: the [slug](https://en.wikipedia.org/wiki/Clean_URL#Slug) of the enterprise you wish to query.
+- **title**: the title of the report issue. This title will be used as the issue title and as the top heading of the issue body with the date of the run appended to it. By [default](https://github.com/ActionsDesk/ghec-enterprise-reporting/blob/main/action.yml) the title will have the value `GHEC Usage Report`.
 
-## Create an action from this template
+### Environment variables
 
-Click the `Use this Template` and provide the new repo details for your action
+Environment variables are meant to be used in your workflow file. Take a look at our [docs for the proper workflow file syntax](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions).
 
-## Code in Main
+When dealing with token please take extra care and use the secure store available in every GitHub repo. Once the value has been added to the secure store you can access it in your workflow file by using `${{secrets.SECURE_VALUE}}` syntax. Here's a [sample workflow](#using-this-action) file as an example.
 
-Install the dependencies  
-```bash
-$ npm install
+- **ENTERPRISE_TOKEN**: A token that has access to the enterprise level data for the enterprise you wish to query. The owner of the token should be an owner of the enterprise to be able to access this data.
+- **GITHUB_TOKEN**: This is the GitHub token that is available in the Action's context.
+
+This template includes compilation support, tests, a validation workflow, publishing, and versioning guidance.
+
+## Using this action
+
+A great way to using this action is with a scheduler. Here's an example workflow file that will run our action on the 28th day of the month, every month:
+
+```
+on:
+  schedule:
+  - cron: "0 0 28 * *"
+
+jobs:
+  report:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actionsdesk/ghec-enterprise-reporting@v1
+      with:
+        enterprise: 'awesome-enterprise'
+        title: 'Much enterprise reporting'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ENTERPRISE_TOKEN: ${{secrets.ENTERPRISE_TOKEN}}
 ```
 
-Build the typescript and package it for distribution
-```bash
-$ npm run build && npm run package
-```
+## Contributing
 
-Run the tests :heavy_check_mark:  
-```bash
-$ npm test
-
- PASS  ./index.test.js
-  ✓ throws invalid number (3ms)
-  ✓ wait 500 ms (504ms)
-  ✓ test runs (95ms)
-
-...
-```
-
-## Change action.yml
-
-The action.yml contains defines the inputs and output for your action.
-
-Update the action.yml with your name, description, inputs and outputs for your action.
-
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
-
-## Change the Code
-
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
-
-```javascript
-import * as core from '@actions/core';
-...
-
-async function run() {
-  try { 
-      ...
-  } 
-  catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-run()
-```
-
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
-
-## Publish to a distribution branch
-
-Actions are run from GitHub repos so we will checkin the packed dist folder. 
-
-Then run [ncc](https://github.com/zeit/ncc) and push the results:
-```bash
-$ npm run package
-$ git add dist
-$ git commit -a -m "prod dependencies"
-$ git push origin releases/v1
-```
-
-Your action is now published! :rocket: 
-
-See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-
-## Validate
-
-You can now validate the action by referencing `./` in a workflow in your repo (see [test.yml](.github/workflows/test.yml))
-
-```yaml
-uses: ./
-with:
-  milliseconds: 1000
-```
-
-See the [actions tab](https://github.com/actions/javascript-action/actions) for runs of this action! :rocket:
-
-## Usage:
-
-After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference the stable and latest V1 action
+All contributions are welcome, from issues to pull requests. Please take a look at our [CONTRIBUTION.md](CONTRIBUTION.md) file for details!
