@@ -10,20 +10,20 @@ Total Purchased: <%= it.assetPacks %>
 
 Name | Login | Billing Email
 ---- | ---- | ----
-<% it.organizations.forEach(org => {
-  org.name | org.login | org.organizationBillingEmail
-}) %>
+<% it.organizations.forEach(org => { %>
+<%= org.name %> | <%= org.login %> | <%= org.organizationBillingEmail %>
+<% }) %>
 
 ## Bandwidth
 
 Usage | Quota | Usage Percentage
----- | ----| ----
+---- | ---- | ----
 <%= it.bandwidth.usage %> | <%= it.bandwidth.quota %> | <%= it.bandwidth.usagePercentage %>
 
 ## Storage
 
 Usage | Quota | Usage Percentage
----- | ----| ----
+---- | ---- | ----
 <%= it.storage.usage %> | <%= it.storage.quota %> | <%= it.storage.usagePercentage %>
 
 ## Licenses
@@ -42,10 +42,10 @@ Minutes Used | Paid Minutes Used | Included Minutes
 
 Total GB Bandwidth Used | Total Paid GB Bandwidth Used | Included GB Bandwidth
 ---- | ---- | ----
-<%= it.packageUsage.totalGigaBytesBandwidthUsed %> | <%= it.packageUsage.totalPaidGigabytesBandwidthUsed %> | <%= it.packageUsage.includedGigabytesBandwidth %>
+<%= it.packagesUsage.totalGigaBytesBandwidthUsed %> | <%= it.packagesUsage.totalPaidGigabytesBandwidthUsed %> | <%= it.packagesUsage.includedGigabytesBandwidth %>
 
 ## Shared Storage Usage
 
 Days Left In Cycle | Estimated Paid Storage For Month | Estimated Storage For Month
 ---- | ---- | ----
-<%= it.sharedStorageBilling.daysLeftInCycle %> | <%= it.sharedStorageBilling.estimatedPaidStorageForMonth %> | <%= it.sharedStorageBilling.estimatedStorageForMonth %>
+<%= it.sharedStorageUsage.daysLeftInCycle %> | <%= it.sharedStorageUsage.estimatedPaidStorageForMonth %> | <%= it.sharedStorageUsage.estimatedStorageForMonth %>
