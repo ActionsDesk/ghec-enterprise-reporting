@@ -104,7 +104,7 @@ export async function getEnterpriseBillingData(token: string, enterprise: string
     });
     actionsUsage = {
       minutesUsed: data.total_minutes_used,
-      paidMinutesUsed: data.total_paid_minutes,
+      paidMinutesUsed: data.total_paid_minutes_used,
       includedMinutes: data.included_minutes
     };
   } catch (error) {
@@ -167,6 +167,7 @@ export function generateReport(
   });
   const data = {
     title,
+    enterprise,
     organizations: organizationData,
     ...billingData
   };
