@@ -15,10 +15,20 @@ Environment variables are meant to be used in your workflow file. Take a look at
 
 When dealing with token please take extra care and use the secure store available in every GitHub repo. Once the value has been added to the secure store you can access it in your workflow file by using `${{secrets.SECURE_VALUE}}` syntax. Here's a [sample workflow](#using-this-action) file as an example.
 
-- **ENTERPRISE_TOKEN**: A token that has access to the enterprise level data for the enterprise you wish to query. The owner of the token should be an owner of the enterprise to be able to access this data.
-- **GITHUB_TOKEN**: This is the GitHub token that is available in the Action's context.
+#### ENTERPRISE_TOKEN
 
-This template includes compilation support, tests, a validation workflow, publishing, and versioning guidance.
+A token that has access to the enterprise level data for the enterprise you wish to query. To create a token go to the settings on the account that should manage it.
+
+It's important that this token have the following OAuth scopes:
+  - admin:enterprise
+  - admin:org
+
+This token needs to be added to the secrets store of the repository that is using it. Take a look at our docs for more on [using secrets with GitHub Actions](https://docs.github.com/en/actions/getting-started-with-github-actions/security-hardening-for-github-actions#using-secrets'.
+Take a look at our docs for more information about [personal access tokens](https://docs.github.com/en/developers/apps/about-apps#personal-access-tokens) and [OAuth scopes](https://docs.github.com/en/developers/apps/scopes-for-oauth-apps).
+
+#### GITHUB_TOKEN
+
+This is the GitHub token that is available in the Action's context. This token will be used to create an issue with the generated report. You don't have to do anything more to use this.
 
 ## Using this action
 
