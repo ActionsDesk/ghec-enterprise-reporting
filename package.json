@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
+  "name": "ghec-enterprise-reporting",
+  "version": "1.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "GitHub Action to compile a usage and billing information from a GitHub Enterprise Cloud account into a reporting issue.",
   "main": "lib/main.js",
   "scripts": {
     "build": "rimraf lib dist && tsc -b",
@@ -11,18 +11,20 @@
     "lint": "eslint .",
     "package": "ncc build --source-map && copyfiles -Vu 1 src/templates/**/* dist",
     "test": "jest",
-    "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
+    "all": "npm run format && npm run lint && npm test && npm run build && npm run package"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/actionsdesk/ghec-enterprise-reporting.git"
   },
   "keywords": [
     "actions",
     "node",
-    "setup"
+    "typescript",
+    "github enterprise",
+    "github api"
   ],
-  "author": "",
+  "author": "Froilán Irizarry Rivera <1918027+froi@users.noreply.github.com>",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.4",
