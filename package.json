@@ -15,14 +15,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/actionsdesk/ghec-enterprise-reporting.git"
   },
   "keywords": [
     "actions",
     "node",
-    "setup"
+    "typescript",
+    "github enterprise",
+    "github api"
   ],
-  "author": "",
+  "author": "Froilán Irizarry Rivera <1918027+froi@users.noreply.github.com>",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.4",
