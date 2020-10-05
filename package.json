@@ -27,7 +27,7 @@
   "author": "Froilán Irizarry Rivera <1918027+froi@users.noreply.github.com>",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.4",
+    "@actions/core": "^1.2.6",
     "@actions/github": "^4.0.0",
     "@octokit/plugin-enterprise-cloud": "^4.2.0",
     "@octokit/plugin-throttling": "^3.3.0",
