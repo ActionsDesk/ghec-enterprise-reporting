@@ -1,22 +1,8 @@
 {
   "name": "ghec-enterprise-reporting",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "GitHub Action to compile a usage and billing information from a GitHub Enterprise Cloud account into a reporting issue.",
-  "main": "lib/main.js",
-  "scripts": {
-    "build": "rimraf lib dist && tsc -b",
-    "format": "prettier --write **/*.ts",
-    "format-check": "prettier --check **/*.ts",
-    "lint": "eslint .",
-    "package": "ncc build --source-map && copyfiles -Vu 1 src/templates/**/* dist",
-    "test": "jest",
-    "all": "npm run format && npm run lint && npm test && npm run build && npm run package"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/actionsdesk/ghec-enterprise-reporting.git"
-  },
   "keywords": [
     "actions",
     "node",
@@ -24,8 +10,38 @@
     "github enterprise",
     "github api"
   ],
-  "author": "Froilán Irizarry Rivera <1918027+froi@users.noreply.github.com>",
+  "author": {
+    "name": "GitHub Professional Services",
+    "email": "services@github.com",
+    "url": "https://services.github.com"
+  },
+  "contributors": [
+    {
+      "name": "Froilán Irizarry Rivera",
+      "email": "1918027+froi@users.noreply.github.com"
+    },
+    {
+      "name": "Stefan Stölzle",
+      "email": "stoe@github.com",
+      "url": "https://github.com/stoe"
+    }
+  ],
   "license": "MIT",
+  "repository": "github:ActionsDesk/ghec-enterprise-reporting",
+  "engines": {
+    "node": ">=14",
+    "npm": ">=7"
+  },
+  "main": "lib/main.js",
+  "scripts": {
+    "build": "rimraf lib dist && tsc -b",
+    "format": "prettier --write **/*.ts",
+    "format-check": "prettier --check **/*.ts",
+    "lint": "eslint .",
+    "package": "npx @vercel/ncc build --source-map --license licenses.txt --quiet --minify && copyfiles -Vu 1 src/templates/**/* dist",
+    "test": "jest",
+    "all": "npm run format && npm run lint && npm test && npm run build && npm run package"
+  },
   "dependencies": {
     "@actions/core": "^1.2.6",
     "@actions/github": "^4.0.0",
@@ -38,7 +54,7 @@
     "@types/jest": "^26.0.15",
     "@types/node": "^14.0.27",
     "@typescript-eslint/parser": "^4.15.0",
-    "@zeit/ncc": "^0.22.3",
+    "@vercel/ncc": "^0.30.0",
     "copyfiles": "^2.3.0",
     "eslint": "^7.6.0",
     "eslint-plugin-github": "^4.1.1",
