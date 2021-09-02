@@ -24,4 +24,4 @@ jobs:
           enterprise: 'enterprise'
           title: 'Much enterprise reporting'
         env:
-          CI: true
+          BUILD_TEST: true

@@ -5,8 +5,8 @@ import {generateReport, getEnterpriseBillingData, getEnterpriseOrgsData} from '.
 import {Organization} from './types';
 
 async function run(): Promise<void> {
-  if (process.env.CI) {
-    core.setOutput('CI', true);
+  if (process.env.BUILD_TEST) {
+    core.setOutput('BUILD_TEST', true);
     return;
   }
 
