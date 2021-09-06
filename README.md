@@ -20,8 +20,9 @@ When dealing with token please take extra care and use the secure store availabl
 A token that has access to the enterprise level data for the enterprise you wish to query. To create a token go to the settings on the account that should manage it.
 
 It's important that this token have the following OAuth scopes:
-  - admin:enterprise
-  - admin:org
+
+- admin:enterprise
+- admin:org
 
 This token needs to be added to the secrets store of the repository that is using it. Take a look at our docs for more on [using secrets with GitHub Actions](https://docs.github.com/en/actions/getting-started-with-github-actions/security-hardening-for-github-actions#using-secrets'.
 Take a look at our docs for more information about [personal access tokens](https://docs.github.com/en/developers/apps/about-apps#personal-access-tokens) and [OAuth scopes](https://docs.github.com/en/developers/apps/scopes-for-oauth-apps).
@@ -34,24 +35,23 @@ This is the GitHub token that is available in the Action's context. This token w
 
 A great way to using this action is with a scheduler. Here's an example workflow file that will run our action on the 28th day of the month, every month:
 
-```
+```yaml
 on:
   schedule:
-  - cron: "0 0 28 * *"
+    - cron: '0 0 28 * *'
 
 jobs:
   report:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actionsdesk/ghec-enterprise-reporting@v1
-      with:
-        enterprise: 'awesome-enterprise'
-        title: 'Much enterprise reporting'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        ENTERPRISE_TOKEN: ${{secrets.ENTERPRISE_TOKEN}}
+      - uses: actionsdesk/ghec-enterprise-reporting@v1
+        with:
+          enterprise: 'awesome-enterprise'
+          title: 'Much enterprise reporting'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ENTERPRISE_TOKEN: ${{secrets.ENTERPRISE_TOKEN}}
 ```
 
 ## Contributing

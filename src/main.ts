@@ -5,6 +5,11 @@ import {generateReport, getEnterpriseBillingData, getEnterpriseOrgsData} from '.
 import {Organization} from './types';
 
 async function run(): Promise<void> {
+  if (process.env.BUILD_TEST) {
+    core.setOutput('BUILD_TEST', true);
+    return;
+  }
+
   try {
     if (!process.env.ENTERPRISE_TOKEN) {
       throw new Error('Environment variable ENTERPRISE_TOKEN is required. Please take a look at your workflow file.');
