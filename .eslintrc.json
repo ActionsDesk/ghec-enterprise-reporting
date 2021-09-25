@@ -3,7 +3,7 @@
     "extends": ["plugin:github/recommended"],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-      "ecmaVersion": 9,
+      "ecmaVersion": "es2021",
       "sourceType": "module",
       "project": "./tsconfig.json"
     },
@@ -44,7 +44,9 @@
       "semi": "off",
       "@typescript-eslint/semi": ["error"],
       "@typescript-eslint/type-annotation-spacing": "error",
-      "@typescript-eslint/unbound-method": "error"
+      "@typescript-eslint/unbound-method": "error",
+      "github/no-implicit-buggy-globals": "off", 
+      "no-implicit-globals": "off"
     },
     "env": {
       "node": true,

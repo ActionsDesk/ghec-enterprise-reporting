@@ -37,7 +37,7 @@
     "build": "rimraf lib dist && tsc -b",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
-    "lint": "eslint .",
+    "lint": "eslint **/*.ts",
     "package": "npx @vercel/ncc build --source-map --license licenses.txt --quiet --minify && copyfiles -Vu 1 src/templates/**/* dist",
     "test": "jest",
     "all": "npm run format && npm run lint && npm test && npm run build && npm run package",
