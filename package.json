@@ -48,7 +48,7 @@
     "@octokit/plugin-enterprise-cloud": "^4.2.0",
     "@octokit/plugin-throttling": "^3.3.0",
     "eta": "^1.2.2",
-    "moment": "^2.27.0"
+    "moment": "^2.29.1"
   },
   "devDependencies": {
     "@types/jest": "^26.0.15",
@@ -58,14 +58,14 @@
     "copyfiles": "^2.3.0",
     "eslint": "^7.6.0",
     "eslint-plugin-github": "^4.1.1",
-    "eslint-plugin-jest": "^23.20.0",
+    "eslint-plugin-jest": "^24.4.2",
     "husky": "^4.2.5",
     "jest": "^26.2.2",
     "jest-circus": "^26.2.2",
     "js-yaml": "^3.14.0",
     "lint-staged": "^10.2.11",
     "nock": "^13.0.4",
-    "prettier": "2.0.5",
+    "prettier": "2.4.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^26.5.1",
     "typescript": "^3.9.7"
