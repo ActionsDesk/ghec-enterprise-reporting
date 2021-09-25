@@ -46,7 +46,7 @@
     "@actions/core": "^1.2.6",
     "@actions/github": "^4.0.0",
     "@octokit/plugin-enterprise-cloud": "^4.2.0",
-    "@octokit/plugin-throttling": "^3.3.0",
+    "@octokit/plugin-throttling": "^3.5.2",
     "eta": "^1.2.2",
     "moment": "^2.29.1"
   },
