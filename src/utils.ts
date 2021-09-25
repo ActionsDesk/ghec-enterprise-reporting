@@ -1,6 +1,5 @@
-import {GitHub, getOctokitOptions} from '@actions/github/lib/utils';
-import {Octokit} from '@octokit/core/dist-types/index';
-import {enterpriseCloud} from '@octokit/plugin-enterprise-cloud';
+import * as Eta from 'eta';
+import * as path from 'path';
 import {
   ActionsUsage,
   BillingData,
@@ -11,20 +10,17 @@ import {
   PackagesUsage,
   SharedStorageUsage
 } from './types';
-import * as Eta from 'eta';
-import * as path from 'path';
-
-function getOctokit(token: string): Octokit {
-  const octokit = GitHub.plugin(enterpriseCloud);
-  return new octokit(getOctokitOptions(token));
-}
+import {GitHub, getOctokitOptions} from '@actions/github/lib/utils';
+import {enterpriseCloud} from '@octokit/plugin-enterprise-cloud';
 
 export async function* getEnterpriseOrgsData(
   token: string,
   enterprise: string,
   cursor: string | null = null
 ): AsyncGenerator<Organization> {
-  const octokit = getOctokit(token);
+  const MyOctokit = GitHub.plugin(enterpriseCloud);
+  const octokit = new MyOctokit(getOctokitOptions(token));
+
   const organizationQuery = `query($enterprise: String!, $cursor: String) {
     enterprise(slug: $enterprise) {
       organizations(first:10, after: $cursor) {
@@ -65,11 +61,13 @@ export async function* getEnterpriseOrgsData(
 }
 
 export async function getEnterpriseBillingData(token: string, enterprise: string): Promise<BillingData> {
-  const octokit = getOctokit(token);
-  let actionsUsage: ActionsUsage;
-  let packagesUsage: PackagesUsage;
-  let sharedStorageUsage: SharedStorageUsage;
-  let enterpriseBillingData: EnterpriseRespose<EnterpriseBillingData>;
+  const MyOctokit = GitHub.plugin(enterpriseCloud);
+  const octokit = new MyOctokit(getOctokitOptions(token));
+
+  let actionsUsage = {} as ActionsUsage;
+  let packagesUsage = {} as PackagesUsage;
+  let sharedStorageUsage = {} as SharedStorageUsage;
+  let enterpriseBillingData = {} as EnterpriseRespose<EnterpriseBillingData>;
 
   const billingInfoQuery = `query($enterprise: String!) {
     enterprise(slug: $enterprise) {
@@ -93,43 +91,44 @@ export async function getEnterpriseBillingData(token: string, enterprise: string
       limit
     }
   }`;
+
   try {
     enterpriseBillingData = await octokit.graphql(billingInfoQuery, {enterprise});
   } catch (error) {
     throw new Error(`Error querying enterprise billing data: ${error}`);
   }
+
   try {
-    const {data} = await octokit.billing.getGithubActionsBillingGhe({
-      enterprise_id: enterprise
-    });
+    const {data: actionsBilling} = await octokit.billing.getGithubActionsBillingGhe({enterprise});
+
     actionsUsage = {
-      minutesUsed: data.total_minutes_used,
-      paidMinutesUsed: data.total_paid_minutes_used,
-      includedMinutes: data.included_minutes
+      minutesUsed: actionsBilling.total_minutes_used,
+      paidMinutesUsed: actionsBilling.total_paid_minutes_used,
+      includedMinutes: actionsBilling.included_minutes
     };
   } catch (error) {
     throw new Error(`Error querying Actions Billing GHEC data: ${error}`);
   }
+
   try {
-    const {data} = await octokit.billing.getGithubPackagesBillingGhe({
-      enterprise_id: enterprise
-    });
+    const {data: packagesBilling} = await octokit.billing.getGithubPackagesBillingGhe({enterprise});
+
     packagesUsage = {
-      totalGigaBytesBandwidthUsed: data.total_gigabytes_bandwidth_used,
-      totalPaidGigabytesBandwidthUsed: data.total_paid_gigabytes_bandwidth_used,
-      includedGigabytesBandwidth: data.included_gigabytes_bandwidth
+      totalGigaBytesBandwidthUsed: packagesBilling.total_gigabytes_bandwidth_used,
+      totalPaidGigabytesBandwidthUsed: packagesBilling.total_paid_gigabytes_bandwidth_used,
+      includedGigabytesBandwidth: packagesBilling.included_gigabytes_bandwidth
     };
   } catch (error) {
     throw new Error(`Error querying Actions Billing GHEC data: ${error}`);
   }
+
   try {
-    const {data} = await octokit.billing.getSharedStorageBillingGhe({
-      enterprise_id: enterprise
-    });
+    const {data: storageBilling} = await octokit.billing.getSharedStorageBillingGhe({enterprise});
+
     sharedStorageUsage = {
-      daysLeftInCycle: data.days_left_in_billing_cycle,
-      estimatedPaidStorageForMonth: data.estimated_paid_storage_for_month,
-      estimatedStorageForMonth: data.estimated_storage_for_month
+      daysLeftInCycle: storageBilling.days_left_in_billing_cycle,
+      estimatedPaidStorageForMonth: storageBilling.estimated_paid_storage_for_month,
+      estimatedStorageForMonth: storageBilling.estimated_storage_for_month
     };
   } catch (error) {
     throw new Error(`Error querying Actions Billing GHEC data: ${error}`);

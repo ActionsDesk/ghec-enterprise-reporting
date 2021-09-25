@@ -166,10 +166,21 @@ test('generate report', () => {
       estimatedStorageForMonth: 10
     }
   };
-  const expectedEnterpriseOrgs =
-    'Name | Login | Billing Email\n---- | ---- | ----\nTest Organization | test-org | test@org.com';
-  const expectedBandwidth = 'Usage | Quota | Usage Percentage\n---- | ---- | ----\n10 | 10 | 100';
-  const expectedStorage = 'Usage | Quota | Usage Percentage\n---- | ---- | ----\n20 | 20 | 200';
+  const expectedEnterpriseOrgs = [
+    '| Name | Login | Billing Email |',
+    '| ---- | ----- | ------------- |',
+    '| Test Organization | test-org | test@org.com |'
+  ].join('\n');
+  const expectedBandwidth = [
+    '| Usage | Quota | Usage Percentage |',
+    '| ----- | ----- | ---------------- |',
+    '| 10 | 10 | 100 |'
+  ].join('\n');
+  const expectedStorage = [
+    '| Usage | Quota | Usage Percentage |',
+    '| ----- | ----- | ---------------- |',
+    '| 20 | 20 | 200 |'
+  ].join('\n');
 
   const report = generateReport(title, enterprise, organizationData, billingData);
   expect(report).toMatch(expectedEnterpriseOrgs);
