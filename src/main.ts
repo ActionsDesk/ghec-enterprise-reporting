@@ -1,15 +1,11 @@
-import * as core from '@actions/core';
-import * as github from '@actions/github';
-import moment from 'moment';
+import {context, getOctokit} from '@actions/github';
 import {generateReport, getEnterpriseBillingData, getEnterpriseOrgsData} from './utils';
+import {getInput, setFailed, setOutput} from '@actions/core';
 import {Organization} from './types';
+import moment from 'moment';
 
-async function run(): Promise<void> {
-  if (process.env.BUILD_TEST) {
-    core.setOutput('BUILD_TEST', true);
-    return;
-  }
-
+// execute
+(async () => {
   try {
     if (!process.env.ENTERPRISE_TOKEN) {
       throw new Error('Environment variable ENTERPRISE_TOKEN is required. Please take a look at your workflow file.');
@@ -20,12 +16,17 @@ async function run(): Promise<void> {
       );
     }
 
+    if (process.env.BUILD_TEST) {
+      setOutput('BUILD_TEST', true);
+      return;
+    }
+
     const enterpriseToken: string = process.env.ENTERPRISE_TOKEN || '';
     const repoToken: string = process.env.GITHUB_TOKEN || '';
-    const enterprise: string = core.getInput('enterprise');
+    const enterprise: string = getInput('enterprise');
     const enterpriseOrgs: Organization[] = [];
     const reportDate = moment().format('MMMM DD, YYYY');
-    let title: string = core.getInput('title');
+    let title: string = getInput('title');
 
     title = `${title} - ${reportDate}`;
 
@@ -34,18 +35,16 @@ async function run(): Promise<void> {
     }
     const enterpriseBillingData = await getEnterpriseBillingData(enterpriseToken, enterprise);
 
-    const octokit = github.getOctokit(repoToken);
+    const octokit = getOctokit(repoToken);
     const body = generateReport(title, enterprise, enterpriseOrgs, enterpriseBillingData);
 
-    await octokit.issues.create({
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
+    await octokit.rest.issues.create({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
       title,
       body
     });
   } catch (error) {
-    core.setFailed(error.message);
+    setFailed((error as Error).message);
   }
-}
-
-run();
+})();

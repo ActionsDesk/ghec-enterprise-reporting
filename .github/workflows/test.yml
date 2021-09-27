@@ -22,6 +22,8 @@ jobs:
       - uses: ./
         with:
           enterprise: 'enterprise'
-          title: 'Much enterprise reporting'
+          title: 'enterprise reporting'
         env:
+          ENTERPRISE_TOKEN: 'ent'
+          GITHUB_TOKEN: 'gh'
           BUILD_TEST: true

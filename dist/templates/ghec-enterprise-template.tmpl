@@ -1,6 +1,6 @@
 # <%= it.title %>
 
-This usage report is for the __<%= it.enterprise %>__ GHEC account.
+This usage report is for the **<%= it.enterprise %>** GHEC account.
 
 ## AssetPacks
 
@@ -8,44 +8,44 @@ Total Purchased: <%= it.assetPacks %>
 
 ## Enterprise Organizations
 
-Name | Login | Billing Email
----- | ---- | ----
+| Name | Login | Billing Email |
+| ---- | ----- | ------------- |
 <% it.organizations.forEach(org => { %>
-<%= org.name %> | <%= org.login %> | <%= org.organizationBillingEmail %>
+| <%= org.name %> | <%= org.login %> | <%= org.organizationBillingEmail %> |
 <% }) %>
 
 ## Bandwidth
 
-Usage | Quota | Usage Percentage
----- | ---- | ----
-<%= it.bandwidth.usage %> | <%= it.bandwidth.quota %> | <%= it.bandwidth.usagePercentage %>
+| Usage | Quota | Usage Percentage |
+| ----- | ----- | ---------------- |
+| <%= it.bandwidth.usage %> | <%= it.bandwidth.quota %> | <%= it.bandwidth.usagePercentage %> |
 
 ## Storage
 
-Usage | Quota | Usage Percentage
----- | ---- | ----
-<%= it.storage.usage %> | <%= it.storage.quota %> | <%= it.storage.usagePercentage %>
+| Usage | Quota | Usage Percentage |
+| ----- | ----- | ---------------- |
+| <%= it.storage.usage %> | <%= it.storage.quota %> | <%= it.storage.usagePercentage %> |
 
 ## Licenses
 
-Total Licenses | All Licensable Users Count | Total Available Licenses
----- | ---- | ----
-<%= it.totalLicenses %> | <%= it.allLicensableUsersCount %> | <%= it.totalAvailableLicenses %>
+| Total Licenses | All Licensable Users Count | Total Available Licenses |
+| -------------- | -------------------------- | ------------------------ |
+| <%= it.totalLicenses %> | <%= it.allLicensableUsersCount %> | <%= it.totalAvailableLicenses %> |
 
 ## Actions Usage
 
-Minutes Used | Paid Minutes Used | Included Minutes
----- | ---- | ----
-<%= it.actionsUsage.minutesUsed %> | <%= it.actionsUsage.paidMinutesUsed %> | <%= it.actionsUsage.includedMinutes %>
+| Minutes Used | Paid Minutes Used | Included Minutes |
+| ------------ | ----------------- | ---------------- |
+| <%= it.actionsUsage.minutesUsed %> | <%= it.actionsUsage.paidMinutesUsed %> | <%= it.actionsUsage.includedMinutes %> |
 
 ## Packages Usage
 
-Total GB Bandwidth Used | Total Paid GB Bandwidth Used | Included GB Bandwidth
----- | ---- | ----
-<%= it.packagesUsage.totalGigaBytesBandwidthUsed %> | <%= it.packagesUsage.totalPaidGigabytesBandwidthUsed %> | <%= it.packagesUsage.includedGigabytesBandwidth %>
+| Total GB Bandwidth Used | Total Paid GB Bandwidth Used | Included GB Bandwidth |
+| ----------------------- | ---------------------------- | --------------------- |
+| <%= it.packagesUsage.totalGigaBytesBandwidthUsed %> | <%= it.packagesUsage.totalPaidGigabytesBandwidthUsed %> | <%= it.packagesUsage.includedGigabytesBandwidth %> |
 
 ## Shared Storage Usage
 
-Days Left In Cycle | Estimated Paid Storage For Month | Estimated Storage For Month
----- | ---- | ----
-<%= it.sharedStorageUsage.daysLeftInCycle %> | <%= it.sharedStorageUsage.estimatedPaidStorageForMonth %> | <%= it.sharedStorageUsage.estimatedStorageForMonth %>
+| Days Left In Cycle | Estimated Paid Storage For Month | Estimated Storage For Month |
+| ------------------ | -------------------------------- | --------------------------- |
+| <%= it.sharedStorageUsage.daysLeftInCycle %> | <%= it.sharedStorageUsage.estimatedPaidStorageForMonth %> | <%= it.sharedStorageUsage.estimatedStorageForMonth %> |
