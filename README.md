@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actionsdesk/ghec-enterprise-reporting@v1
+      - uses: actionsdesk/ghec-enterprise-reporting@v2
         with:
           enterprise: 'awesome-enterprise'
           title: 'Much enterprise reporting'
