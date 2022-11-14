@@ -1,6 +1,6 @@
 {
   "name": "ghec-enterprise-reporting",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
   "description": "GitHub Action to compile a usage and billing information from a GitHub Enterprise Cloud account into a reporting issue.",
   "keywords": [
