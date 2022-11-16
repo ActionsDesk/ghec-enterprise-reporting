@@ -24,7 +24,7 @@ It's important that this token have the following OAuth scopes:
 - admin:enterprise
 - admin:org
 
-This token needs to be added to the secrets store of the repository that is using it. Take a look at our docs for more on [using secrets with GitHub Actions](https://docs.github.com/en/actions/getting-started-with-github-actions/security-hardening-for-github-actions#using-secrets'.
+This token needs to be added to the secrets store of the repository that is using it. Take a look at our docs for more on [using secrets with GitHub Actions](https://docs.github.com/en/actions/getting-started-with-github-actions/security-hardening-for-github-actions#using-secrets).
 Take a look at our docs for more information about [personal access tokens](https://docs.github.com/en/developers/apps/about-apps#personal-access-tokens) and [OAuth scopes](https://docs.github.com/en/developers/apps/scopes-for-oauth-apps).
 
 #### GITHUB_TOKEN
