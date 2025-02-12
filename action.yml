@@ -1,14 +1,25 @@
-name: 'ghec-enterprise-reporting'
-description: 'Action to report GHEC enterprise account billing information in an issue.'
-author: 'GitHub Professional Services <https://services.github.com>'
+name: ghec-enterprise-reporting
+description:
+  Action to report GitHub Enterprise Cloud account billing information in an
+  issue
+author: GitHub Expert Services <https://services.github.com>
+
 inputs:
-  enterprise:
+  enterprise_slug:
+    description: The enterprise to query in slug format (e.g. `github`)
     required: true
-    description: 'The enterprise to query in slug format. Eg. github'
-  title:
+  enterprise_token:
+    description: The GitHub Enterprise Cloud token to use for authentication
+    required: true
+  github_token:
+    description: The GitHub token to use for authentication
+    required: true
+    default: ${{ github.token }}
+  issue_title:
+    description: Enterprise billing report title to add to the created issue
     required: false
-    description: 'Enterprise billing report title to add to the out issue.'
-    default: 'GHEC Usage Report'
+    default: GHEC Usage Report
+
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: node20
+  main: dist/index.js
