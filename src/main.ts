@@ -1,50 +1,52 @@
-import {context, getOctokit} from '@actions/github';
-import {generateReport, getEnterpriseBillingData, getEnterpriseOrgsData} from './utils';
-import {getInput, setFailed, setOutput} from '@actions/core';
-import {Organization} from './types';
-import moment from 'moment';
+import * as core from '@actions/core'
+import * as github from '@actions/github'
+import moment from 'moment'
+import {
+  generateReport,
+  getEnterpriseBillingData,
+  getEnterpriseOrgsData
+} from './utils.js'
 
-// execute
-(async () => {
-  try {
-    if (!process.env.ENTERPRISE_TOKEN) {
-      throw new Error('Environment variable ENTERPRISE_TOKEN is required. Please take a look at your workflow file.');
-    }
-    if (!process.env.GITHUB_TOKEN) {
-      throw new Error(
-        'Environment variable GITHUB_TOKEN with enterprise access is required. Please take a look at your workflow file.'
-      );
-    }
+/**
+ * The main function for the action.
+ *
+ * @returns Resolves when the action is complete.
+ */
+export async function run(): Promise<void> {
+  const enterpriseSlug = core.getInput('enterprise_slug', { required: true })
+  const enterpriseToken = core.getInput('enterprise_token', { required: true })
+  const githubToken = core.getInput('github_token', { required: true })
+  const issueTitle = core.getInput('issue_title', { required: true })
 
-    if (process.env.BUILD_TEST) {
-      setOutput('BUILD_TEST', true);
-      return;
-    }
+  const reportDate = moment().format('MMMM DD, YYYY')
 
-    const enterpriseToken: string = process.env.ENTERPRISE_TOKEN || '';
-    const repoToken: string = process.env.GITHUB_TOKEN || '';
-    const enterprise: string = getInput('enterprise');
-    const enterpriseOrgs: Organization[] = [];
-    const reportDate = moment().format('MMMM DD, YYYY');
-    let title: string = getInput('title');
+  const title = `${issueTitle} - ${reportDate}`
 
-    title = `${title} - ${reportDate}`;
+  const enterpriseOrgs = await getEnterpriseOrgsData(
+    enterpriseToken,
+    enterpriseSlug
+  )
+  core.info(`Enterprise Organizatons: ${enterpriseOrgs.length}`)
 
-    for await (const org of getEnterpriseOrgsData(enterpriseToken, enterprise)) {
-      enterpriseOrgs.push(org);
-    }
-    const enterpriseBillingData = await getEnterpriseBillingData(enterpriseToken, enterprise);
+  const enterpriseBillingData = await getEnterpriseBillingData(
+    enterpriseToken,
+    enterpriseSlug
+  )
+  core.info('Enterprise Billing Data:')
+  core.info(JSON.stringify(enterpriseBillingData, null, 2))
 
-    const octokit = getOctokit(repoToken);
-    const body = generateReport(title, enterprise, enterpriseOrgs, enterpriseBillingData);
+  const body = generateReport(
+    title,
+    enterpriseSlug,
+    enterpriseOrgs,
+    enterpriseBillingData
+  )
 
-    await octokit.rest.issues.create({
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      title,
-      body
-    });
-  } catch (error) {
-    setFailed((error as Error).message);
-  }
-})();
+  const octokit = github.getOctokit(githubToken)
+  await octokit.rest.issues.create({
+    owner: github.context.repo.owner,
+    repo: github.context.repo.repo,
+    title,
+    body
+  })
+}
