@@ -56,7 +56,7 @@ jobs:
 
 ## Example Output
 
-The following markdown will be generated in the issue body:
+The following Markdown will be generated in the issue body:
 
 ```markdown
 This usage report is for the **ENTERPRISE_SLUG** GHEC account.
