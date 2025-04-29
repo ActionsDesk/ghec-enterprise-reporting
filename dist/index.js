@@ -38033,7 +38033,7 @@ var createTokenAuth = function createTokenAuth2(token) {
   });
 };
 
-const VERSION$5 = "6.1.4";
+const VERSION$5 = "6.1.5";
 
 const noop = () => {
 };
