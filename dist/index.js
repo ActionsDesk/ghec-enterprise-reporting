@@ -14,22 +14,20 @@ import require$$0$5 from 'stream';
 import require$$7 from 'buffer';
 import require$$8 from 'querystring';
 import require$$14 from 'stream/web';
-import require$$0$7 from 'node:stream';
-import require$$1$3 from 'node:util';
-import require$$0$6 from 'node:events';
-import require$$0$8 from 'worker_threads';
+import { createRequire } from 'node:module';
+import require$$0$6 from 'worker_threads';
 import require$$2$2 from 'perf_hooks';
 import require$$5 from 'util/types';
 import require$$4$2 from 'async_hooks';
-import require$$1$4 from 'console';
-import require$$1$5, { fileURLToPath } from 'url';
+import require$$1$3 from 'console';
+import require$$1$4, { fileURLToPath } from 'url';
 import require$$3$2 from 'zlib';
 import require$$6 from 'string_decoder';
-import require$$0$9 from 'diagnostics_channel';
+import require$$0$7 from 'diagnostics_channel';
 import require$$2$3 from 'child_process';
 import require$$6$1 from 'timers';
-import * as path from 'node:path';
 import * as fs from 'node:fs';
+import * as path from 'node:path';
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -42,7 +40,11 @@ function getAugmentedNamespace(n) {
   var f = n.default;
 	if (typeof f == "function") {
 		var a = function a () {
-			if (this instanceof a) {
+			var isInstance = false;
+      try {
+        isInstance = this instanceof a;
+      } catch {}
+			if (isInstance) {
         return Reflect.construct(f, arguments, this.constructor);
 			}
 			return f.apply(this, arguments);
@@ -1752,6 +1754,15 @@ function requireTimers () {
 
 var main = {exports: {}};
 
+const require$3 = createRequire(import.meta.url);
+function __require$2() { return require$3("node:stream"); }
+
+const require$2 = createRequire(import.meta.url);
+function __require$1() { return require$2("node:util"); }
+
+const require$1 = createRequire(import.meta.url);
+function __require() { return require$1("node:events"); }
+
 var sbmh;
 var hasRequiredSbmh;
 
@@ -1785,8 +1796,8 @@ function requireSbmh () {
 	 * Based heavily on the Streaming Boyer-Moore-Horspool C++ implementation
 	 * by Hongli Lai at: https://github.com/FooBarWidget/boyer-moore-horspool
 	 */
-	const EventEmitter = require$$0$6.EventEmitter;
-	const inherits = require$$1$3.inherits;
+	const EventEmitter = __require().EventEmitter;
+	const inherits = __require$1().inherits;
 
 	function SBMH (needle) {
 	  if (typeof needle === 'string') {
@@ -1995,8 +2006,8 @@ function requirePartStream () {
 	if (hasRequiredPartStream) return PartStream_1;
 	hasRequiredPartStream = 1;
 
-	const inherits = require$$1$3.inherits;
-	const ReadableStream = require$$0$7.Readable;
+	const inherits = __require$1().inherits;
+	const ReadableStream = __require$2().Readable;
 
 	function PartStream (opts) {
 	  ReadableStream.call(this, opts);
@@ -2040,8 +2051,8 @@ function requireHeaderParser () {
 	if (hasRequiredHeaderParser) return HeaderParser_1;
 	hasRequiredHeaderParser = 1;
 
-	const EventEmitter = require$$0$6.EventEmitter;
-	const inherits = require$$1$3.inherits;
+	const EventEmitter = __require().EventEmitter;
+	const inherits = __require$1().inherits;
 	const getLimit = requireGetLimit();
 
 	const StreamSearch = requireSbmh();
@@ -2148,8 +2159,8 @@ function requireDicer () {
 	if (hasRequiredDicer) return Dicer_1;
 	hasRequiredDicer = 1;
 
-	const WritableStream = require$$0$7.Writable;
-	const inherits = require$$1$3.inherits;
+	const WritableStream = __require$2().Writable;
+	const inherits = __require$1().inherits;
 
 	const StreamSearch = requireSbmh();
 
@@ -2725,8 +2736,8 @@ function requireMultipart () {
 	//  * support limits.fieldNameSize
 	//     -- this will require modifications to utils.parseParams
 
-	const { Readable } = require$$0$7;
-	const { inherits } = require$$1$3;
+	const { Readable } = __require$2();
+	const { inherits } = __require$1();
 
 	const Dicer = requireDicer();
 
@@ -3291,8 +3302,8 @@ function requireMain () {
 	if (hasRequiredMain) return main.exports;
 	hasRequiredMain = 1;
 
-	const WritableStream = require$$0$7.Writable;
-	const { inherits } = require$$1$3;
+	const WritableStream = __require$2().Writable;
+	const { inherits } = __require$1();
 	const Dicer = requireDicer();
 
 	const MultipartParser = requireMultipart();
@@ -3384,7 +3395,7 @@ function requireConstants$3 () {
 	if (hasRequiredConstants$3) return constants$3;
 	hasRequiredConstants$3 = 1;
 
-	const { MessageChannel, receiveMessageOnPort } = require$$0$8;
+	const { MessageChannel, receiveMessageOnPort } = require$$0$6;
 
 	const corsSafeListedMethods = ['GET', 'HEAD', 'POST'];
 	const corsSafeListedMethodsSet = new Set(corsSafeListedMethods);
@@ -14140,7 +14151,7 @@ function requirePendingInterceptorsFormatter () {
 	hasRequiredPendingInterceptorsFormatter = 1;
 
 	const { Transform } = require$$0$5;
-	const { Console } = require$$1$4;
+	const { Console } = require$$1$3;
 
 	/**
 	 * Gets the output of `console.table(…)` as a string.
@@ -14367,7 +14378,7 @@ function requireProxyAgent () {
 	hasRequiredProxyAgent = 1;
 
 	const { kProxy, kClose, kDestroy, kInterceptors } = requireSymbols$4();
-	const { URL } = require$$1$5;
+	const { URL } = require$$1$4;
 	const Agent = requireAgent();
 	const Pool = requirePool();
 	const DispatcherBase = requireDispatcherBase();
@@ -22317,7 +22328,7 @@ function requireEvents () {
 
 	const { webidl } = requireWebidl();
 	const { kEnumerableProperty } = requireUtil$6();
-	const { MessagePort } = require$$0$8;
+	const { MessagePort } = require$$0$6;
 
 	/**
 	 * @see https://html.spec.whatwg.org/multipage/comms.html#messageevent
@@ -22834,7 +22845,7 @@ function requireConnection () {
 	if (hasRequiredConnection) return connection;
 	hasRequiredConnection = 1;
 
-	const diagnosticsChannel = require$$0$9;
+	const diagnosticsChannel = require$$0$7;
 	const { uid, states } = requireConstants();
 	const {
 	  kReadyState,
@@ -23215,7 +23226,7 @@ function requireReceiver () {
 	hasRequiredReceiver = 1;
 
 	const { Writable } = require$$0$5;
-	const diagnosticsChannel = require$$0$9;
+	const diagnosticsChannel = require$$0$7;
 	const { parserStates, opcodes, states, emptyBuffer } = requireConstants();
 	const { kReadyState, kSentClose, kResponse, kReceivedClose } = requireSymbols();
 	const { isValidStatusCode, failWebsocketConnection, websocketMessageReceived } = requireUtil();
@@ -37669,7 +37680,7 @@ class RequestError extends Error {
 // pkg/dist-src/index.js
 
 // pkg/dist-src/version.js
-var VERSION$7 = "0.0.0-development";
+var VERSION$7 = "10.0.5";
 
 // pkg/dist-src/defaults.js
 var defaults_default = {
@@ -38034,12 +38045,27 @@ var createTokenAuth = function createTokenAuth2(token) {
   });
 };
 
-const VERSION$5 = "7.0.2";
+const VERSION$5 = "7.0.5";
 
 const noop = () => {
 };
 const consoleWarn = console.warn.bind(console);
 const consoleError = console.error.bind(console);
+function createLogger(logger = {}) {
+  if (typeof logger.debug !== "function") {
+    logger.debug = noop;
+  }
+  if (typeof logger.info !== "function") {
+    logger.info = noop;
+  }
+  if (typeof logger.warn !== "function") {
+    logger.warn = consoleWarn;
+  }
+  if (typeof logger.error !== "function") {
+    logger.error = consoleError;
+  }
+  return logger;
+}
 const userAgentTrail = `octokit-core.js/${VERSION$5} ${getUserAgent$3()}`;
 let Octokit$1 = class Octokit {
   static VERSION = VERSION$5;
@@ -38107,15 +38133,7 @@ let Octokit$1 = class Octokit {
     }
     this.request = request.defaults(requestDefaults);
     this.graphql = withCustomRequest(this.request).defaults(requestDefaults);
-    this.log = Object.assign(
-      {
-        debug: noop,
-        info: noop,
-        warn: consoleWarn,
-        error: consoleError
-      },
-      options.log
-    );
+    this.log = createLogger(options.log);
     this.hook = hook;
     if (!options.authStrategy) {
       if (!options.auth) {
@@ -38263,8 +38281,17 @@ var Endpoints$1 = {
     addResourceToCostCenter: [
       "POST /enterprises/:enterprise/settings/billing/cost-centers/:cost_center_id/resource"
     ],
+    createCostCenter: [
+      "POST /enterprises/:enterprise/settings/billing/cost-centers"
+    ],
+    deleteCostCenter: [
+      "DELETE /enterprises/:enterprise/settings/billing/cost-centers/:cost_center_id"
+    ],
     getAllCostCenters: [
       "GET /enterprises/:enterprise/settings/billing/cost-centers"
+    ],
+    getCostCenter: [
+      "GET /enterprises/:enterprise/settings/billing/cost-centers/:cost_center_id"
     ],
     getGithubActionsBillingGhe: [
       "GET /enterprises/:enterprise/settings/billing/actions"
@@ -38286,19 +38313,49 @@ var Endpoints$1 = {
     ],
     removeResourceFromCostCenter: [
       "DELETE /enterprises/:enterprise/settings/billing/cost-centers/:cost_center_id/resource"
+    ],
+    updateCostCenter: [
+      "PATCH /enterprises/:enterprise/settings/billing/cost-centers/:cost_center_id"
     ]
   },
   codeScanning: {
+    getDismissalRequestForRepo: [
+      "GET /repos/:owner/:repo/dismissal-requests/code-scanning/:alert_number"
+    ],
     listAlertsForEnterprise: [
       "GET /enterprises/:enterprise/code-scanning/alerts"
+    ],
+    listDismissalRequestsForRepo: [
+      "GET /repos/:owner/:repo/dismissal-requests/code-scanning"
+    ],
+    listOrgDismissalRequests: [
+      "GET /orgs/:org/dismissal-requests/code-scanning"
+    ],
+    reviewDismissalRequestForRepo: [
+      "PATCH /repos/:owner/:repo/dismissal-requests/code-scanning/:alert_number"
     ]
   },
   copilot: {
+    addCopilotSeatsForEnterpriseTeams: [
+      "POST /enterprises/:enterprise/copilot/billing/selected_enterprise_teams"
+    ],
+    addCopilotSeatsForEnterpriseUsers: [
+      "POST /enterprises/:enterprise/copilot/billing/selected_users"
+    ],
+    cancelCopilotSeatsForEnterpriseTeams: [
+      "DELETE /enterprises/:enterprise/copilot/billing/selected_enterprise_teams"
+    ],
+    cancelCopilotSeatsForEnterpriseUsers: [
+      "DELETE /enterprises/:enterprise/copilot/billing/selected_users"
+    ],
     copilotMetricsForEnterprise: [
       "GET /enterprises/:enterprise/copilot/metrics"
     ],
     copilotMetricsForEnterpriseTeam: [
       "GET /enterprises/:enterprise/team/:team_slug/copilot/metrics"
+    ],
+    getCopilotSeatDetailsForEnterpriseUser: [
+      "GET /enterprises/:enterprise/members/:username/copilot"
     ],
     listCopilotSeatsForEnterprise: [
       "GET /enterprises/:enterprise/copilot/billing/seats"
@@ -38315,12 +38372,6 @@ var Endpoints$1 = {
       "PUT /enterprises/:enterprise/actions/runner-groups/:runner_group_id/runners/:runner_id"
     ],
     createAuditLogStream: ["POST /enterprises/:enterprise/audit-log/streams"],
-    createOrUpdateEnterpriseCustomProperties: [
-      "PATCH /enterprises/:enterprise/properties/schema"
-    ],
-    createOrUpdateEnterpriseCustomProperty: [
-      "PUT /enterprises/:enterprise/properties/schema/:custom_property_name"
-    ],
     createRegistrationTokenForEnterprise: [
       "POST /enterprises/:enterprise/actions/runners/registration-token"
     ],
@@ -38329,6 +38380,24 @@ var Endpoints$1 = {
     ],
     createSelfHostedRunnerGroupForEnterprise: [
       "POST /enterprises/:enterprise/actions/runner-groups"
+    ],
+    customPropertiesForReposCreateOrUpdateEnterpriseDefinition: [
+      "PUT /enterprises/:enterprise/properties/schema/:custom_property_name"
+    ],
+    customPropertiesForReposCreateOrUpdateEnterpriseDefinitions: [
+      "PATCH /enterprises/:enterprise/properties/schema"
+    ],
+    customPropertiesForReposDeleteEnterpriseDefinition: [
+      "DELETE /enterprises/:enterprise/properties/schema/:custom_property_name"
+    ],
+    customPropertiesForReposGetEnterpriseDefinition: [
+      "GET /enterprises/:enterprise/properties/schema/:custom_property_name"
+    ],
+    customPropertiesForReposGetEnterpriseDefinitions: [
+      "GET /enterprises/:enterprise/properties/schema"
+    ],
+    customPropertiesForReposPromoteDefinitionToEnterprise: [
+      "PUT /enterprises/:enterprise/properties/schema/organizations/:org/:custom_property_name/promote"
     ],
     deleteAuditLogStream: [
       "DELETE /enterprises/:enterprise/audit-log/streams/:stream_id"
@@ -38354,21 +38423,21 @@ var Endpoints$1 = {
     getAllowedActionsEnterprise: [
       "GET /enterprises/:enterprise/actions/permissions/selected-actions"
     ],
+    getArtifactAndLogRetentionSettings: [
+      "GET /enterprises/:enterprise/actions/permissions/artifact-and-log-retention"
+    ],
     getAuditLog: ["GET /enterprises/:enterprise/audit-log"],
     getAuditLogStreamKey: ["GET /enterprises/:enterprise/audit-log/stream-key"],
     getAuditLogStreams: ["GET /enterprises/:enterprise/audit-log/streams"],
     getConsumedLicenses: ["GET /enterprises/:enterprise/consumed-licenses"],
-    getEnterpriseCustomProperties: [
-      "GET /enterprises/:enterprise/properties/schema"
-    ],
-    getEnterpriseCustomProperty: [
-      "GET /enterprises/:enterprise/properties/schema/:custom_property_name"
-    ],
     getEnterpriseRulesetHistory: [
       "GET /enterprises/:enterprise/rulesets/:ruleset_id/history"
     ],
     getEnterpriseRulesetVersion: [
       "GET /enterprises/:enterprise/rulesets/:ruleset_id/history/:version_id"
+    ],
+    getForkPrContributorApprovalPermissions: [
+      "GET /enterprises/:enterprise/actions/permissions/fork-pr-contributor-approval"
     ],
     getGithubActionsPermissionsEnterprise: [
       "GET /enterprises/:enterprise/actions/permissions"
@@ -38376,6 +38445,9 @@ var Endpoints$1 = {
     getLicenseSyncStatus: ["GET /enterprises/:enterprise/license-sync-status"],
     getOneAuditLogStream: [
       "GET /enterprises/:enterprise/audit-log/streams/:stream_id"
+    ],
+    getPrivateRepoForkPrWorkflowsSettings: [
+      "GET /enterprises/:enterprise/actions/permissions/fork-pr-workflows-private-repos"
     ],
     getProvisioningInformationForEnterpriseGroup: [
       "GET /scim/v2/enterprises/:enterprise/Groups/:scim_group_id"
@@ -38388,6 +38460,9 @@ var Endpoints$1 = {
     ],
     getSelfHostedRunnerGroupForEnterprise: [
       "GET /enterprises/:enterprise/actions/runner-groups/:runner_group_id"
+    ],
+    getSelfHostedRunnersPermissions: [
+      "GET /enterprises/:enterprise/actions/permissions/self-hosted-runners"
     ],
     getServerStatistics: [
       "GET /enterprise-installation/:enterprise_or_org/server-statistics"
@@ -38422,9 +38497,6 @@ var Endpoints$1 = {
     listSelfHostedRunnersInGroupForEnterprise: [
       "GET /enterprises/:enterprise/actions/runner-groups/:runner_group_id/runners"
     ],
-    promoteCustomPropertyToEnterprise: [
-      "PUT /enterprises/:enterprise/properties/schema/organizations/:org/:custom_property_name/promote"
-    ],
     provisionEnterpriseGroup: ["POST /scim/v2/enterprises/:enterprise/Groups"],
     provisionEnterpriseUser: ["POST /scim/v2/enterprises/:enterprise/Users"],
     removeAllCustomLabelsFromSelfHostedRunnerForEnterprise: [
@@ -38432,9 +38504,6 @@ var Endpoints$1 = {
     ],
     removeCustomLabelFromSelfHostedRunnerForEnterprise: [
       "DELETE /enterprises/:enterprise/actions/runners/:runner_id/labels/:name"
-    ],
-    removeEnterpriseCustomProperty: [
-      "DELETE /enterprises/:enterprise/properties/schema/:custom_property_name"
     ],
     removeOrgAccessToSelfHostedRunnerGroupInEnterprise: [
       "DELETE /enterprises/:enterprise/actions/runner-groups/:runner_group_id/organizations/:org_id"
@@ -38445,8 +38514,14 @@ var Endpoints$1 = {
     setAllowedActionsEnterprise: [
       "PUT /enterprises/:enterprise/actions/permissions/selected-actions"
     ],
+    setArtifactAndLogRetentionSettings: [
+      "PUT /enterprises/:enterprise/actions/permissions/artifact-and-log-retention"
+    ],
     setCustomLabelsForSelfHostedRunnerForEnterprise: [
       "PUT /enterprises/:enterprise/actions/runners/:runner_id/labels"
+    ],
+    setForkPrContributorApprovalPermissions: [
+      "PUT /enterprises/:enterprise/actions/permissions/fork-pr-contributor-approval"
     ],
     setGithubActionsPermissionsEnterprise: [
       "PUT /enterprises/:enterprise/actions/permissions"
@@ -38460,11 +38535,17 @@ var Endpoints$1 = {
     setOrgAccessToSelfHostedRunnerGroupInEnterprise: [
       "PUT /enterprises/:enterprise/actions/runner-groups/:runner_group_id/organizations"
     ],
+    setPrivateRepoForkPrWorkflowsSettings: [
+      "PUT /enterprises/:enterprise/actions/permissions/fork-pr-workflows-private-repos"
+    ],
     setSelectedOrganizationsEnabledGithubActionsEnterprise: [
       "PUT /enterprises/:enterprise/actions/permissions/organizations"
     ],
     setSelfHostedRunnersInGroupForEnterprise: [
       "PUT /enterprises/:enterprise/actions/runner-groups/:runner_group_id/runners"
+    ],
+    setSelfHostedRunnersPermissions: [
+      "PUT /enterprises/:enterprise/actions/permissions/self-hosted-runners"
     ],
     updateAttributeForEnterpriseGroup: [
       "PATCH /scim/v2/enterprises/:enterprise/Groups/:scim_group_id"
@@ -38477,6 +38558,35 @@ var Endpoints$1 = {
     ],
     updateSelfHostedRunnerGroupForEnterprise: [
       "PATCH /enterprises/:enterprise/actions/runner-groups/:runner_group_id"
+    ]
+  },
+  enterpriseApps: {
+    changeInstallationRepositoryAccessSelection: [
+      "PATCH /enterprises/:enterprise/apps/organizations/:org/installations/:installation_id/repositories"
+    ],
+    createInstallation: [
+      "POST /enterprises/:enterprise/apps/organizations/:org/installations"
+    ],
+    deleteInstallation: [
+      "DELETE /enterprises/:enterprise/apps/organizations/:org/installations/:installation_id"
+    ],
+    grantRepositoryAccessToInstallation: [
+      "PATCH /enterprises/:enterprise/apps/organizations/:org/installations/:installation_id/repositories/add"
+    ],
+    installableOrganizationAccessibleRepositories: [
+      "GET /enterprises/:enterprise/apps/installable_organizations/:org/accessible_repositories"
+    ],
+    installableOrganizations: [
+      "GET /enterprises/:enterprise/apps/installable_organizations"
+    ],
+    organizationInstallationRepositories: [
+      "GET /enterprises/:enterprise/apps/organizations/:org/installations/:installation_id/repositories"
+    ],
+    organizationInstallations: [
+      "GET /enterprises/:enterprise/apps/organizations/:org/installations"
+    ],
+    removeRepositoryAccessToInstallation: [
+      "PATCH /enterprises/:enterprise/apps/organizations/:org/installations/:installation_id/repositories/remove"
     ]
   },
   hostedCompute: {
@@ -38569,6 +38679,50 @@ var Endpoints$1 = {
       }
     ]
   },
+  projectsClassic: {
+    createCard: [
+      "POST /projects/columns/:column_id/cards",
+      {},
+      {
+        deprecated: "octokit.scim.createCard() is deprecated, see https://docs.github.com/enterprise-cloud@latest//rest/projects-classic/cards#create-a-project-card"
+      }
+    ],
+    deleteCard: [
+      "DELETE /projects/columns/cards/:card_id",
+      {},
+      {
+        deprecated: "octokit.scim.deleteCard() is deprecated, see https://docs.github.com/enterprise-cloud@latest//rest/projects-classic/cards#delete-a-project-card"
+      }
+    ],
+    getCard: [
+      "GET /projects/columns/cards/:card_id",
+      {},
+      {
+        deprecated: "octokit.scim.getCard() is deprecated, see https://docs.github.com/enterprise-cloud@latest//rest/projects-classic/cards#get-a-project-card"
+      }
+    ],
+    listCards: [
+      "GET /projects/columns/:column_id/cards",
+      {},
+      {
+        deprecated: "octokit.scim.listCards() is deprecated, see https://docs.github.com/enterprise-cloud@latest//rest/projects-classic/cards#list-project-cards"
+      }
+    ],
+    moveCard: [
+      "POST /projects/columns/cards/:card_id/moves",
+      {},
+      {
+        deprecated: "octokit.scim.moveCard() is deprecated, see https://docs.github.com/enterprise-cloud@latest//rest/projects-classic/cards#move-a-project-card"
+      }
+    ],
+    updateCard: [
+      "PATCH /projects/columns/cards/:card_id",
+      {},
+      {
+        deprecated: "octokit.scim.updateCard() is deprecated, see https://docs.github.com/enterprise-cloud@latest//rest/projects-classic/cards#update-an-existing-project-card"
+      }
+    ]
+  },
   repos: {
     createEnterpriseRuleset: ["POST /enterprises/:enterprise/rulesets"],
     deleteEnterpriseRuleset: [
@@ -38610,6 +38764,9 @@ var Endpoints$1 = {
     getBypassRequest: [
       "GET /repos/:owner/:repo/bypass-requests/secret-scanning/:bypass_request_number"
     ],
+    getDismissalRequest: [
+      "GET /repos/:owner/:repo/dismissal-requests/secret-scanning/:alert_number"
+    ],
     getSecurityAnalysisSettingsForEnterprise: [
       "GET /enterprises/:enterprise/code_security_and_analysis",
       {},
@@ -38617,9 +38774,21 @@ var Endpoints$1 = {
         deprecated: "octokit.scim.getSecurityAnalysisSettingsForEnterprise() is deprecated, see https://docs.github.com/enterprise-cloud@latest//rest/enterprise-admin/code-security-and-analysis#get-code-security-and-analysis-features-for-an-enterprise"
       }
     ],
+    listEnterpriseBypassRequests: [
+      "GET /enterprises/:enterprise/bypass-requests/secret-scanning"
+    ],
+    listEnterprisePatternConfigs: [
+      "GET /enterprises/:enterprise/secret-scanning/pattern-configurations"
+    ],
     listOrgBypassRequests: ["GET /orgs/:org/bypass-requests/secret-scanning"],
+    listOrgDismissalRequests: [
+      "GET /orgs/:org/dismissal-requests/secret-scanning"
+    ],
     listRepoBypassRequests: [
       "GET /repos/:owner/:repo/bypass-requests/secret-scanning"
+    ],
+    listRepoDismissalRequests: [
+      "GET /repos/:owner/:repo/dismissal-requests/secret-scanning"
     ],
     patchSecurityAnalysisSettingsForEnterprise: [
       "PATCH /enterprises/:enterprise/code_security_and_analysis",
@@ -38637,6 +38806,12 @@ var Endpoints$1 = {
     ],
     reviewBypassRequest: [
       "PATCH /repos/:owner/:repo/bypass-requests/secret-scanning/:bypass_request_number"
+    ],
+    reviewDismissalRequest: [
+      "PATCH /repos/:owner/:repo/dismissal-requests/secret-scanning/:alert_number"
+    ],
+    updateEnterprisePatternConfigs: [
+      "PATCH /enterprises/:enterprise/secret-scanning/pattern-configurations"
     ]
   },
   teams: {
@@ -38751,14 +38926,16 @@ function normalizePaginatedListResponse(response) {
       data: []
     };
   }
-  const responseNeedsNormalization = "total_count" in response.data && !("url" in response.data);
+  const responseNeedsNormalization = ("total_count" in response.data || "total_commits" in response.data) && !("url" in response.data);
   if (!responseNeedsNormalization) return response;
   const incompleteResults = response.data.incomplete_results;
   const repositorySelection = response.data.repository_selection;
   const totalCount = response.data.total_count;
+  const totalCommits = response.data.total_commits;
   delete response.data.incomplete_results;
   delete response.data.repository_selection;
   delete response.data.total_count;
+  delete response.data.total_commits;
   const namespaceKey = Object.keys(response.data)[0];
   const data = response.data[namespaceKey];
   response.data = data;
@@ -38769,6 +38946,7 @@ function normalizePaginatedListResponse(response) {
     response.data.repository_selection = repositorySelection;
   }
   response.data.total_count = totalCount;
+  response.data.total_commits = totalCommits;
   return response;
 }
 
@@ -38789,6 +38967,16 @@ function iterator(octokit, route, parameters) {
           url = ((normalizedResponse.headers.link || "").match(
             /<([^<>]+)>;\s*rel="next"/
           ) || [])[1];
+          if (!url && "total_commits" in normalizedResponse.data) {
+            const parsedUrl = new URL(normalizedResponse.url);
+            const params = parsedUrl.searchParams;
+            const page = parseInt(params.get("page") || "1", 10);
+            const per_page = parseInt(params.get("per_page") || "250", 10);
+            if (page * per_page < normalizedResponse.data.total_commits) {
+              params.set("page", String(page + 1));
+              url = parsedUrl.toString();
+            }
+          }
           return { value: normalizedResponse };
         } catch (error) {
           if (error.status !== 409) throw error;
@@ -41098,656 +41286,508 @@ const Octokit = Octokit$1.plugin(requestLog, legacyRestEndpointMethods, paginate
   }
 );
 
+//#region src/err.ts
+var EtaError = class extends Error {
+	constructor(message) {
+		super(message);
+		this.name = "Eta Error";
+	}
+};
+var EtaParseError = class extends EtaError {
+	constructor(message) {
+		super(message);
+		this.name = "EtaParser Error";
+	}
+};
+var EtaRuntimeError = class extends EtaError {
+	constructor(message) {
+		super(message);
+		this.name = "EtaRuntime Error";
+	}
+};
+var EtaFileResolutionError = class extends EtaError {
+	constructor(message) {
+		super(message);
+		this.name = "EtaFileResolution Error";
+	}
+};
+var EtaNameResolutionError = class extends EtaError {
+	constructor(message) {
+		super(message);
+		this.name = "EtaNameResolution Error";
+	}
+};
 /**
- * Handles storage and accessing of values
- *
- * In this case, we use it to store compiled template functions
- * Indexed by their `name` or `filename`
- */
-class Cacher {
-  constructor(cache) {
-    this.cache = void 0;
-    this.cache = cache;
-  }
-  define(key, val) {
-    this.cache[key] = val;
-  }
-  get(key) {
-    return this.cache[key];
-  }
-  remove(key) {
-    delete this.cache[key];
-  }
-  reset() {
-    this.cache = {};
-  }
-  load(cacheObj) {
-    this.cache = {
-      ...this.cache,
-      ...cacheObj
-    };
-  }
-}
-
-class EtaError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = "Eta Error";
-  }
-}
-class EtaParseError extends EtaError {
-  constructor(message) {
-    super(message);
-    this.name = "EtaParser Error";
-  }
-}
-class EtaRuntimeError extends EtaError {
-  constructor(message) {
-    super(message);
-    this.name = "EtaRuntime Error";
-  }
-}
-class EtaFileResolutionError extends EtaError {
-  constructor(message) {
-    super(message);
-    this.name = "EtaFileResolution Error";
-  }
-}
-class EtaNameResolutionError extends EtaError {
-  constructor(message) {
-    super(message);
-    this.name = "EtaNameResolution Error";
-  }
-}
-/**
- * Throws an EtaError with a nicely formatted error and message showing where in the template the error occurred.
- */
+* Throws an EtaError with a nicely formatted error and message showing where in the template the error occurred.
+*/
 function ParseErr(message, str, indx) {
-  const whitespace = str.slice(0, indx).split(/\n/);
-  const lineNo = whitespace.length;
-  const colNo = whitespace[lineNo - 1].length + 1;
-  message += " at line " + lineNo + " col " + colNo + ":\n\n" + "  " + str.split(/\n/)[lineNo - 1] + "\n" + "  " + Array(colNo).join(" ") + "^";
-  throw new EtaParseError(message);
+	const whitespace = str.slice(0, indx).split(/\n/);
+	const lineNo = whitespace.length;
+	const colNo = whitespace[lineNo - 1].length + 1;
+	message += " at line " + lineNo + " col " + colNo + ":\n\n  " + str.split(/\n/)[lineNo - 1] + "\n  " + Array(colNo).join(" ") + "^";
+	throw new EtaParseError(message);
 }
-function RuntimeErr(originalError, str, lineNo, path) {
-  // code gratefully taken from https://github.com/mde/ejs and adapted
-  const lines = str.split("\n");
-  const start = Math.max(lineNo - 3, 0);
-  const end = Math.min(lines.length, lineNo + 3);
-  const filename = path;
-  // Error context
-  const context = lines.slice(start, end).map(function (line, i) {
-    const curr = i + start + 1;
-    return (curr == lineNo ? " >> " : "    ") + curr + "| " + line;
-  }).join("\n");
-  const header = filename ? filename + ":" + lineNo + "\n" : "line " + lineNo + "\n";
-  const err = new EtaRuntimeError(header + context + "\n\n" + originalError.message);
-  err.name = originalError.name; // the original name (e.g. ReferenceError) may be useful
-  throw err;
+function RuntimeErr(originalError, str, lineNo, path$1) {
+	const lines = str.split("\n");
+	const start = Math.max(lineNo - 3, 0);
+	const end = Math.min(lines.length, lineNo + 3);
+	const filename = path$1;
+	const context = lines.slice(start, end).map((line, i) => {
+		const curr = i + start + 1;
+		return (curr === lineNo ? " >> " : "    ") + curr + "| " + line;
+	}).join("\n");
+	const header = filename ? filename + ":" + lineNo + "\n" : "line " + lineNo + "\n";
+	const err = new EtaRuntimeError(header + context + "\n\n" + originalError.message);
+	err.name = originalError.name;
+	throw err;
 }
 
-/* END TYPES */
+//#endregion
+//#region src/file-handling.ts
+function readFile(path$1) {
+	let res = "";
+	try {
+		res = fs.readFileSync(path$1, "utf8");
+	} catch (err) {
+		if (err?.code === "ENOENT") throw new EtaFileResolutionError(`Could not find template: ${path$1}`);
+		else throw err;
+	}
+	return res;
+}
+function resolvePath(templatePath, options) {
+	let resolvedFilePath = "";
+	const views = this.config.views;
+	if (!views) throw new EtaFileResolutionError("Views directory is not defined");
+	const baseFilePath = options?.filepath;
+	const defaultExtension = this.config.defaultExtension === void 0 ? ".eta" : this.config.defaultExtension;
+	const cacheIndex = JSON.stringify({
+		filename: baseFilePath,
+		path: templatePath,
+		views: this.config.views
+	});
+	templatePath += path.extname(templatePath) ? "" : defaultExtension;
+	if (baseFilePath) {
+		if (this.config.cacheFilepaths && this.filepathCache[cacheIndex]) return this.filepathCache[cacheIndex];
+		if (absolutePathRegExp.exec(templatePath)?.length) {
+			const formattedPath = templatePath.replace(/^\/*|^\\*/, "");
+			resolvedFilePath = path.join(views, formattedPath);
+		} else resolvedFilePath = path.join(path.dirname(baseFilePath), templatePath);
+	} else resolvedFilePath = path.join(views, templatePath);
+	if (dirIsChild(views, resolvedFilePath)) {
+		if (baseFilePath && this.config.cacheFilepaths) this.filepathCache[cacheIndex] = resolvedFilePath;
+		return resolvedFilePath;
+	} else throw new EtaFileResolutionError(`Template '${templatePath}' is not in the views directory`);
+}
+function dirIsChild(parent, dir) {
+	const relative = path.relative(parent, dir);
+	return relative && !relative.startsWith("..") && !path.isAbsolute(relative);
+}
+const absolutePathRegExp = /^\\|^\//;
+
+//#endregion
+//#region src/compile.ts
 /* istanbul ignore next */
-const AsyncFunction = async function () {}.constructor; // eslint-disable-line @typescript-eslint/no-empty-function
+const AsyncFunction = (async () => {}).constructor;
 /**
- * Takes a template string and returns a template function that can be called with (data, config)
- *
- * @param str - The template string
- * @param config - A custom configuration object (optional)
- */
+* Takes a template string and returns a template function that can be called with (data, config)
+*
+* @param str - The template string
+* @param config - A custom configuration object (optional)
+*/
 function compile(str, options) {
-  const config = this.config;
-  /* ASYNC HANDLING */
-  // code gratefully taken from https://github.com/mde/ejs and adapted
-  const ctor = options && options.async ? AsyncFunction : Function;
-  /* END ASYNC HANDLING */
-  try {
-    return new ctor(config.varName, "options", this.compileToString.call(this, str, options)); // eslint-disable-line no-new-func
-  } catch (e) {
-    if (e instanceof SyntaxError) {
-      throw new EtaParseError("Bad template syntax\n\n" + e.message + "\n" + Array(e.message.length + 1).join("=") + "\n" + this.compileToString.call(this, str, options) + "\n");
-    } else {
-      throw e;
-    }
-  }
+	const config = this.config;
+	const ctor = options?.async ? AsyncFunction : Function;
+	try {
+		return new ctor(config.varName, "options", this.compileToString.call(this, str, options));
+	} catch (e) {
+		if (e instanceof SyntaxError) throw new EtaParseError("Bad template syntax\n\n" + e.message + "\n" + Array(e.message.length + 1).join("=") + "\n" + this.compileToString.call(this, str, options) + "\n");
+		else throw e;
+	}
 }
 
-/* TYPES */
-/* END TYPES */
+//#endregion
+//#region src/compile-string.ts
 /**
- * Compiles a template string to a function string. Most often users just use `compile()`, which calls `compileToString` and creates a new function using the result
- */
+* Compiles a template string to a function string. Most often users just use `compile()`, which calls `compileToString` and creates a new function using the result
+*/
 function compileToString(str, options) {
-  const config = this.config;
-  const isAsync = options && options.async;
-  const compileBody = this.compileBody;
-  const buffer = this.parse.call(this, str);
-  // note: when the include function passes through options, the only parameter that matters is the filepath parameter
-  let res = `${config.functionHeader}
+	const config = this.config;
+	const isAsync = options?.async;
+	const compileBody$1 = this.compileBody;
+	const buffer = this.parse.call(this, str);
+	let res = `${config.functionHeader}
 let include = (template, data) => this.render(template, data, options);
 let includeAsync = (template, data) => this.renderAsync(template, data, options);
 
-let __eta = {res: "", e: this.config.escapeFunction, f: this.config.filterFunction${config.debug ? ', line: 1, templateStr: "' + str.replace(/\\|"/g, "\\$&").replace(/\r\n|\n|\r/g, "\\n") + '"' : ""}};
+let __eta = {res: "", e: this.config.escapeFunction, f: this.config.filterFunction${config.debug ? ", line: 1, templateStr: \"" + str.replace(/\\|"/g, "\\$&").replace(/\r\n|\n|\r/g, "\\n") + "\"" : ""}};
 
 function layout(path, data) {
   __eta.layout = path;
   __eta.layoutData = data;
 }${config.debug ? "try {" : ""}${config.useWith ? "with(" + config.varName + "||{}){" : ""}
 
-${compileBody.call(this, buffer)}
+${compileBody$1.call(this, buffer)}
 if (__eta.layout) {
   __eta.res = ${isAsync ? "await includeAsync" : "include"} (__eta.layout, {...${config.varName}, body: __eta.res, ...__eta.layoutData});
 }
 ${config.useWith ? "}" : ""}${config.debug ? "} catch (e) { this.RuntimeErr(e, __eta.templateStr, __eta.line, options.filepath) }" : ""}
 return __eta.res;
 `;
-  if (config.plugins) {
-    for (let i = 0; i < config.plugins.length; i++) {
-      const plugin = config.plugins[i];
-      if (plugin.processFnString) {
-        res = plugin.processFnString(res, config);
-      }
-    }
-  }
-  return res;
+	if (config.plugins) for (let i = 0; i < config.plugins.length; i++) {
+		const plugin = config.plugins[i];
+		if (plugin.processFnString) res = plugin.processFnString(res, config);
+	}
+	return res;
 }
 /**
- * Loops through the AST generated by `parse` and transform each item into JS calls
- *
- * **Example**
- *
- * ```js
- * let templateAST = ['Hi ', { val: 'it.name', t: 'i' }]
- * compileBody.call(Eta, templateAST)
- * // => "__eta.res+='Hi '\n__eta.res+=__eta.e(it.name)\n"
- * ```
- */
+* Loops through the AST generated by `parse` and transform each item into JS calls
+*
+* **Example**
+*
+* ```js
+* let templateAST = ['Hi ', { val: 'it.name', t: 'i' }]
+* compileBody.call(Eta, templateAST)
+* // => "__eta.res+='Hi '\n__eta.res+=__eta.e(it.name)\n"
+* ```
+*/
 function compileBody(buff) {
-  const config = this.config;
-  let i = 0;
-  const buffLength = buff.length;
-  let returnStr = "";
-  for (i; i < buffLength; i++) {
-    const currentBlock = buff[i];
-    if (typeof currentBlock === "string") {
-      const str = currentBlock;
-      // we know string exists
-      returnStr += "__eta.res+='" + str + "'\n";
-    } else {
-      const type = currentBlock.t; // "r", "e", or "i"
-      let content = currentBlock.val || "";
-      if (config.debug) returnStr += "__eta.line=" + currentBlock.lineNo + "\n";
-      if (type === "r") {
-        // raw
-        if (config.autoFilter) {
-          content = "__eta.f(" + content + ")";
-        }
-        returnStr += "__eta.res+=" + content + "\n";
-      } else if (type === "i") {
-        // interpolate
-        if (config.autoFilter) {
-          content = "__eta.f(" + content + ")";
-        }
-        if (config.autoEscape) {
-          content = "__eta.e(" + content + ")";
-        }
-        returnStr += "__eta.res+=" + content + "\n";
-      } else if (type === "e") {
-        // execute
-        returnStr += content + "\n";
-      }
-    }
-  }
-  return returnStr;
+	const config = this.config;
+	let i = 0;
+	const buffLength = buff.length;
+	let returnStr = "";
+	for (; i < buffLength; i++) {
+		const currentBlock = buff[i];
+		if (typeof currentBlock === "string") returnStr += "__eta.res+='" + currentBlock + "'\n";
+		else {
+			const type = currentBlock.t;
+			let content = currentBlock.val || "";
+			if (config.debug) returnStr += "__eta.line=" + currentBlock.lineNo + "\n";
+			if (type === "r") {
+				if (config.autoFilter) content = "__eta.f(" + content + ")";
+				returnStr += "__eta.res+=" + content + "\n";
+			} else if (type === "i") {
+				if (config.autoFilter) content = "__eta.f(" + content + ")";
+				if (config.autoEscape) content = "__eta.e(" + content + ")";
+				returnStr += "__eta.res+=" + content + "\n";
+			} else if (type === "e") returnStr += content + "\n";
+		}
+	}
+	return returnStr;
 }
 
+//#endregion
+//#region src/utils.ts
 /**
- * Takes a string within a template and trims it, based on the preceding tag's whitespace control and `config.autoTrim`
- */
+* Takes a string within a template and trims it, based on the preceding tag's whitespace control and `config.autoTrim`
+*/
 function trimWS(str, config, wsLeft, wsRight) {
-  let leftTrim;
-  let rightTrim;
-  if (Array.isArray(config.autoTrim)) {
-    // Slightly confusing,
-    // but _}} will trim the left side of the following string
-    leftTrim = config.autoTrim[1];
-    rightTrim = config.autoTrim[0];
-  } else {
-    leftTrim = rightTrim = config.autoTrim;
-  }
-  if (wsLeft || wsLeft === false) {
-    leftTrim = wsLeft;
-  }
-  if (wsRight || wsRight === false) {
-    rightTrim = wsRight;
-  }
-  if (!rightTrim && !leftTrim) {
-    return str;
-  }
-  if (leftTrim === "slurp" && rightTrim === "slurp") {
-    return str.trim();
-  }
-  if (leftTrim === "_" || leftTrim === "slurp") {
-    // full slurp
-    str = str.trimStart();
-  } else if (leftTrim === "-" || leftTrim === "nl") {
-    // nl trim
-    str = str.replace(/^(?:\r\n|\n|\r)/, "");
-  }
-  if (rightTrim === "_" || rightTrim === "slurp") {
-    // full slurp
-    str = str.trimEnd();
-  } else if (rightTrim === "-" || rightTrim === "nl") {
-    // nl trim
-    str = str.replace(/(?:\r\n|\n|\r)$/, "");
-  }
-  return str;
+	let leftTrim;
+	let rightTrim;
+	if (Array.isArray(config.autoTrim)) {
+		leftTrim = config.autoTrim[1];
+		rightTrim = config.autoTrim[0];
+	} else leftTrim = rightTrim = config.autoTrim;
+	if (wsLeft || wsLeft === false) leftTrim = wsLeft;
+	if (wsRight || wsRight === false) rightTrim = wsRight;
+	if (!rightTrim && !leftTrim) return str;
+	if (leftTrim === "slurp" && rightTrim === "slurp") return str.trim();
+	if (leftTrim === "_" || leftTrim === "slurp") str = str.trimStart();
+	else if (leftTrim === "-" || leftTrim === "nl") str = str.replace(/^(?:\r\n|\n|\r)/, "");
+	if (rightTrim === "_" || rightTrim === "slurp") str = str.trimEnd();
+	else if (rightTrim === "-" || rightTrim === "nl") str = str.replace(/(?:\r\n|\n|\r)$/, "");
+	return str;
 }
 /**
- * A map of special HTML characters to their XML-escaped equivalents
- */
+* A map of special HTML characters to their XML-escaped equivalents
+*/
 const escMap = {
-  "&": "&amp;",
-  "<": "&lt;",
-  ">": "&gt;",
-  '"': "&quot;",
-  "'": "&#39;"
+	"&": "&amp;",
+	"<": "&lt;",
+	">": "&gt;",
+	"\"": "&quot;",
+	"'": "&#39;"
 };
 function replaceChar(s) {
-  return escMap[s];
+	return escMap[s];
 }
 /**
- * XML-escapes an input value after converting it to a string
- *
- * @param str - Input value (usually a string)
- * @returns XML-escaped string
- */
+* XML-escapes an input value after converting it to a string
+*
+* @param str - Input value (usually a string)
+* @returns XML-escaped string
+*/
 function XMLEscape(str) {
-  // To deal with XSS. Based on Escape implementations of Mustache.JS and Marko, then customized.
-  const newStr = String(str);
-  if (/[&<>"']/.test(newStr)) {
-    return newStr.replace(/[&<>"']/g, replaceChar);
-  } else {
-    return newStr;
-  }
+	const newStr = String(str);
+	if (/[&<>"']/.test(newStr)) return newStr.replace(/[&<>"']/g, replaceChar);
+	else return newStr;
 }
 
-/* END TYPES */
+//#endregion
+//#region src/config.ts
 /** Eta's base (global) configuration */
 const defaultConfig = {
-  autoEscape: true,
-  autoFilter: false,
-  autoTrim: [false, "nl"],
-  cache: false,
-  cacheFilepaths: true,
-  debug: false,
-  escapeFunction: XMLEscape,
-  // default filter function (not used unless enables) just stringifies the input
-  filterFunction: val => String(val),
-  functionHeader: "",
-  parse: {
-    exec: "",
-    interpolate: "=",
-    raw: "~"
-  },
-  plugins: [],
-  rmWhitespace: false,
-  tags: ["<%", "%>"],
-  useWith: false,
-  varName: "it",
-  defaultExtension: ".eta"
+	autoEscape: true,
+	autoFilter: false,
+	autoTrim: [false, "nl"],
+	cache: false,
+	cacheFilepaths: true,
+	debug: false,
+	escapeFunction: XMLEscape,
+	filterFunction: (val) => String(val),
+	functionHeader: "",
+	parse: {
+		exec: "",
+		interpolate: "=",
+		raw: "~"
+	},
+	plugins: [],
+	rmWhitespace: false,
+	tags: ["<%", "%>"],
+	useWith: false,
+	varName: "it",
+	defaultExtension: ".eta"
 };
 
-/* END TYPES */
+//#endregion
+//#region src/parse.ts
 const templateLitReg = /`(?:\\[\s\S]|\${(?:[^{}]|{(?:[^{}]|{[^}]*})*})*}|(?!\${)[^\\`])*`/g;
 const singleQuoteReg = /'(?:\\[\s\w"'\\`]|[^\n\r'\\])*?'/g;
 const doubleQuoteReg = /"(?:\\[\s\w"'\\`]|[^\n\r"\\])*?"/g;
 /** Escape special regular expression characters inside a string */
 function escapeRegExp(string) {
-  // From MDN
-  return string.replace(/[.*+\-?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
+	return string.replace(/[.*+\-?^${}()|[\]\\]/g, "\\$&");
 }
-
 function getLineNo(str, index) {
-  return str.slice(0, index).split("\n").length;
+	return str.slice(0, index).split("\n").length;
 }
 function parse(str) {
-  const config = this.config;
-  let buffer = [];
-  let trimLeftOfNextStr = false;
-  let lastIndex = 0;
-  const parseOptions = config.parse;
-  if (config.plugins) {
-    for (let i = 0; i < config.plugins.length; i++) {
-      const plugin = config.plugins[i];
-      if (plugin.processTemplate) {
-        str = plugin.processTemplate(str, config);
-      }
-    }
-  }
-  /* Adding for EJS compatibility */
-  if (config.rmWhitespace) {
-    // Code taken directly from EJS
-    // Have to use two separate replaces here as `^` and `$` operators don't
-    // work well with `\r` and empty lines don't work well with the `m` flag.
-    // Essentially, this replaces the whitespace at the beginning and end of
-    // each line and removes multiple newlines.
-    str = str.replace(/[\r\n]+/g, "\n").replace(/^\s+|\s+$/gm, "");
-  }
-  /* End rmWhitespace option */
-  templateLitReg.lastIndex = 0;
-  singleQuoteReg.lastIndex = 0;
-  doubleQuoteReg.lastIndex = 0;
-  function pushString(strng, shouldTrimRightOfString) {
-    if (strng) {
-      // if string is truthy it must be of type 'string'
-      strng = trimWS(strng, config, trimLeftOfNextStr,
-      // this will only be false on the first str, the next ones will be null or undefined
-      shouldTrimRightOfString);
-      if (strng) {
-        // replace \ with \\, ' with \'
-        // we're going to convert all CRLF to LF so it doesn't take more than one replace
-        strng = strng.replace(/\\|'/g, "\\$&").replace(/\r\n|\n|\r/g, "\\n");
-        buffer.push(strng);
-      }
-    }
-  }
-  const prefixes = [parseOptions.exec, parseOptions.interpolate, parseOptions.raw].reduce(function (accumulator, prefix) {
-    if (accumulator && prefix) {
-      return accumulator + "|" + escapeRegExp(prefix);
-    } else if (prefix) {
-      // accumulator is falsy
-      return escapeRegExp(prefix);
-    } else {
-      // prefix and accumulator are both falsy
-      return accumulator;
-    }
-  }, "");
-  const parseOpenReg = new RegExp(escapeRegExp(config.tags[0]) + "(-|_)?\\s*(" + prefixes + ")?\\s*", "g");
-  const parseCloseReg = new RegExp("'|\"|`|\\/\\*|(\\s*(-|_)?" + escapeRegExp(config.tags[1]) + ")", "g");
-  let m;
-  while (m = parseOpenReg.exec(str)) {
-    const precedingString = str.slice(lastIndex, m.index);
-    lastIndex = m[0].length + m.index;
-    const wsLeft = m[1];
-    const prefix = m[2] || ""; // by default either ~, =, or empty
-    pushString(precedingString, wsLeft);
-    parseCloseReg.lastIndex = lastIndex;
-    let closeTag;
-    let currentObj = false;
-    while (closeTag = parseCloseReg.exec(str)) {
-      if (closeTag[1]) {
-        const content = str.slice(lastIndex, closeTag.index);
-        parseOpenReg.lastIndex = lastIndex = parseCloseReg.lastIndex;
-        trimLeftOfNextStr = closeTag[2];
-        const currentType = prefix === parseOptions.exec ? "e" : prefix === parseOptions.raw ? "r" : prefix === parseOptions.interpolate ? "i" : "";
-        currentObj = {
-          t: currentType,
-          val: content
-        };
-        break;
-      } else {
-        const char = closeTag[0];
-        if (char === "/*") {
-          const commentCloseInd = str.indexOf("*/", parseCloseReg.lastIndex);
-          if (commentCloseInd === -1) {
-            ParseErr("unclosed comment", str, closeTag.index);
-          }
-          parseCloseReg.lastIndex = commentCloseInd;
-        } else if (char === "'") {
-          singleQuoteReg.lastIndex = closeTag.index;
-          const singleQuoteMatch = singleQuoteReg.exec(str);
-          if (singleQuoteMatch) {
-            parseCloseReg.lastIndex = singleQuoteReg.lastIndex;
-          } else {
-            ParseErr("unclosed string", str, closeTag.index);
-          }
-        } else if (char === '"') {
-          doubleQuoteReg.lastIndex = closeTag.index;
-          const doubleQuoteMatch = doubleQuoteReg.exec(str);
-          if (doubleQuoteMatch) {
-            parseCloseReg.lastIndex = doubleQuoteReg.lastIndex;
-          } else {
-            ParseErr("unclosed string", str, closeTag.index);
-          }
-        } else if (char === "`") {
-          templateLitReg.lastIndex = closeTag.index;
-          const templateLitMatch = templateLitReg.exec(str);
-          if (templateLitMatch) {
-            parseCloseReg.lastIndex = templateLitReg.lastIndex;
-          } else {
-            ParseErr("unclosed string", str, closeTag.index);
-          }
-        }
-      }
-    }
-    if (currentObj) {
-      if (config.debug) {
-        currentObj.lineNo = getLineNo(str, m.index);
-      }
-      buffer.push(currentObj);
-    } else {
-      ParseErr("unclosed tag", str, m.index);
-    }
-  }
-  pushString(str.slice(lastIndex, str.length), false);
-  if (config.plugins) {
-    for (let i = 0; i < config.plugins.length; i++) {
-      const plugin = config.plugins[i];
-      if (plugin.processAST) {
-        buffer = plugin.processAST(buffer, config);
-      }
-    }
-  }
-  return buffer;
+	const config = this.config;
+	let buffer = [];
+	let trimLeftOfNextStr = false;
+	let lastIndex = 0;
+	const parseOptions = config.parse;
+	if (config.plugins) for (let i = 0; i < config.plugins.length; i++) {
+		const plugin = config.plugins[i];
+		if (plugin.processTemplate) str = plugin.processTemplate(str, config);
+	}
+	if (config.rmWhitespace) str = str.replace(/[\r\n]+/g, "\n").replace(/^\s+|\s+$/gm, "");
+	templateLitReg.lastIndex = 0;
+	singleQuoteReg.lastIndex = 0;
+	doubleQuoteReg.lastIndex = 0;
+	function pushString(strng, shouldTrimRightOfString) {
+		if (strng) {
+			strng = trimWS(strng, config, trimLeftOfNextStr, shouldTrimRightOfString);
+			if (strng) {
+				strng = strng.replace(/\\|'/g, "\\$&").replace(/\r\n|\n|\r/g, "\\n");
+				buffer.push(strng);
+			}
+		}
+	}
+	const prefixes = [
+		parseOptions.exec,
+		parseOptions.interpolate,
+		parseOptions.raw
+	].reduce((accumulator, prefix) => {
+		if (accumulator && prefix) return accumulator + "|" + escapeRegExp(prefix);
+		else if (prefix) return escapeRegExp(prefix);
+		else return accumulator;
+	}, "");
+	const parseOpenReg = new RegExp(escapeRegExp(config.tags[0]) + "(-|_)?\\s*(" + prefixes + ")?\\s*", "g");
+	const parseCloseReg = new RegExp("'|\"|`|\\/\\*|(\\s*(-|_)?" + escapeRegExp(config.tags[1]) + ")", "g");
+	let m;
+	while (m = parseOpenReg.exec(str)) {
+		const precedingString = str.slice(lastIndex, m.index);
+		lastIndex = m[0].length + m.index;
+		const wsLeft = m[1];
+		const prefix = m[2] || "";
+		pushString(precedingString, wsLeft);
+		parseCloseReg.lastIndex = lastIndex;
+		let closeTag;
+		let currentObj = false;
+		while (closeTag = parseCloseReg.exec(str)) if (closeTag[1]) {
+			const content = str.slice(lastIndex, closeTag.index);
+			parseOpenReg.lastIndex = lastIndex = parseCloseReg.lastIndex;
+			trimLeftOfNextStr = closeTag[2];
+			currentObj = {
+				t: prefix === parseOptions.exec ? "e" : prefix === parseOptions.raw ? "r" : prefix === parseOptions.interpolate ? "i" : "",
+				val: content
+			};
+			break;
+		} else {
+			const char = closeTag[0];
+			if (char === "/*") {
+				const commentCloseInd = str.indexOf("*/", parseCloseReg.lastIndex);
+				if (commentCloseInd === -1) ParseErr("unclosed comment", str, closeTag.index);
+				parseCloseReg.lastIndex = commentCloseInd;
+			} else if (char === "'") {
+				singleQuoteReg.lastIndex = closeTag.index;
+				if (singleQuoteReg.exec(str)) parseCloseReg.lastIndex = singleQuoteReg.lastIndex;
+				else ParseErr("unclosed string", str, closeTag.index);
+			} else if (char === "\"") {
+				doubleQuoteReg.lastIndex = closeTag.index;
+				if (doubleQuoteReg.exec(str)) parseCloseReg.lastIndex = doubleQuoteReg.lastIndex;
+				else ParseErr("unclosed string", str, closeTag.index);
+			} else if (char === "`") {
+				templateLitReg.lastIndex = closeTag.index;
+				if (templateLitReg.exec(str)) parseCloseReg.lastIndex = templateLitReg.lastIndex;
+				else ParseErr("unclosed string", str, closeTag.index);
+			}
+		}
+		if (currentObj) {
+			if (config.debug) currentObj.lineNo = getLineNo(str, m.index);
+			buffer.push(currentObj);
+		} else ParseErr("unclosed tag", str, m.index);
+	}
+	pushString(str.slice(lastIndex, str.length), false);
+	if (config.plugins) for (let i = 0; i < config.plugins.length; i++) {
+		const plugin = config.plugins[i];
+		if (plugin.processAST) buffer = plugin.processAST(buffer, config);
+	}
+	return buffer;
 }
 
-/* END TYPES */
+//#endregion
+//#region src/render.ts
 function handleCache(template, options) {
-  const templateStore = options && options.async ? this.templatesAsync : this.templatesSync;
-  if (this.resolvePath && this.readFile && !template.startsWith("@")) {
-    const templatePath = options.filepath;
-    const cachedTemplate = templateStore.get(templatePath);
-    if (this.config.cache && cachedTemplate) {
-      return cachedTemplate;
-    } else {
-      const templateString = this.readFile(templatePath);
-      const templateFn = this.compile(templateString, options);
-      if (this.config.cache) templateStore.define(templatePath, templateFn);
-      return templateFn;
-    }
-  } else {
-    const cachedTemplate = templateStore.get(template);
-    if (cachedTemplate) {
-      return cachedTemplate;
-    } else {
-      throw new EtaNameResolutionError("Failed to get template '" + template + "'");
-    }
-  }
+	const templateStore = options?.async ? this.templatesAsync : this.templatesSync;
+	if (this.resolvePath && this.readFile && !template.startsWith("@")) {
+		const templatePath = options.filepath;
+		const cachedTemplate = templateStore.get(templatePath);
+		if (this.config.cache && cachedTemplate) return cachedTemplate;
+		else {
+			const templateString = this.readFile(templatePath);
+			const templateFn = this.compile(templateString, options);
+			if (this.config.cache) templateStore.define(templatePath, templateFn);
+			return templateFn;
+		}
+	} else {
+		const cachedTemplate = templateStore.get(template);
+		if (cachedTemplate) return cachedTemplate;
+		else throw new EtaNameResolutionError(`Failed to get template '${template}'`);
+	}
 }
-function render(template,
-// template name or template function
-data, meta) {
-  let templateFn;
-  const options = {
-    ...meta,
-    async: false
-  };
-  if (typeof template === "string") {
-    if (this.resolvePath && this.readFile && !template.startsWith("@")) {
-      options.filepath = this.resolvePath(template, options);
-    }
-    templateFn = handleCache.call(this, template, options);
-  } else {
-    templateFn = template;
-  }
-  const res = templateFn.call(this, data, options);
-  return res;
+function render(template, data, meta) {
+	let templateFn;
+	const options = {
+		...meta,
+		async: false
+	};
+	if (typeof template === "string") {
+		if (this.resolvePath && this.readFile && !template.startsWith("@")) options.filepath = this.resolvePath(template, options);
+		templateFn = handleCache.call(this, template, options);
+	} else templateFn = template;
+	return templateFn.call(this, data, options);
 }
-function renderAsync(template,
-// template name or template function
-data, meta) {
-  let templateFn;
-  const options = {
-    ...meta,
-    async: true
-  };
-  if (typeof template === "string") {
-    if (this.resolvePath && this.readFile && !template.startsWith("@")) {
-      options.filepath = this.resolvePath(template, options);
-    }
-    templateFn = handleCache.call(this, template, options);
-  } else {
-    templateFn = template;
-  }
-  const res = templateFn.call(this, data, options);
-  // Return a promise
-  return Promise.resolve(res);
+function renderAsync(template, data, meta) {
+	let templateFn;
+	const options = {
+		...meta,
+		async: true
+	};
+	if (typeof template === "string") {
+		if (this.resolvePath && this.readFile && !template.startsWith("@")) options.filepath = this.resolvePath(template, options);
+		templateFn = handleCache.call(this, template, options);
+	} else templateFn = template;
+	const res = templateFn.call(this, data, options);
+	return Promise.resolve(res);
 }
 function renderString(template, data) {
-  const templateFn = this.compile(template, {
-    async: false
-  });
-  return render.call(this, templateFn, data);
+	const templateFn = this.compile(template, { async: false });
+	return render.call(this, templateFn, data);
 }
 function renderStringAsync(template, data) {
-  const templateFn = this.compile(template, {
-    async: true
-  });
-  return renderAsync.call(this, templateFn, data);
+	const templateFn = this.compile(template, { async: true });
+	return renderAsync.call(this, templateFn, data);
 }
 
-/* END TYPES */
-class Eta$1 {
-  constructor(customConfig) {
-    this.config = void 0;
-    this.RuntimeErr = RuntimeErr;
-    this.compile = compile;
-    this.compileToString = compileToString;
-    this.compileBody = compileBody;
-    this.parse = parse;
-    this.render = render;
-    this.renderAsync = renderAsync;
-    this.renderString = renderString;
-    this.renderStringAsync = renderStringAsync;
-    this.filepathCache = {};
-    this.templatesSync = new Cacher({});
-    this.templatesAsync = new Cacher({});
-    // resolvePath takes a relative path from the "views" directory
-    this.resolvePath = null;
-    this.readFile = null;
-    if (customConfig) {
-      this.config = {
-        ...defaultConfig,
-        ...customConfig
-      };
-    } else {
-      this.config = {
-        ...defaultConfig
-      };
-    }
-  }
-  // METHODS
-  configure(customConfig) {
-    this.config = {
-      ...this.config,
-      ...customConfig
-    };
-  }
-  withConfig(customConfig) {
-    return {
-      ...this,
-      config: {
-        ...this.config,
-        ...customConfig
-      }
-    };
-  }
-  loadTemplate(name, template,
-  // template string or template function
-  options) {
-    if (typeof template === "string") {
-      const templates = options && options.async ? this.templatesAsync : this.templatesSync;
-      templates.define(name, this.compile(template, options));
-    } else {
-      let templates = this.templatesSync;
-      if (template.constructor.name === "AsyncFunction" || options && options.async) {
-        templates = this.templatesAsync;
-      }
-      templates.define(name, template);
-    }
-  }
-}
+//#endregion
+//#region src/storage.ts
+/**
+* Handles storage and accessing of values
+*
+* In this case, we use it to store compiled template functions
+* Indexed by their `name` or `filename`
+*/
+var Cacher = class {
+	constructor(cache) {
+		this.cache = cache;
+	}
+	define(key, val) {
+		this.cache[key] = val;
+	}
+	get(key) {
+		return this.cache[key];
+	}
+	remove(key) {
+		delete this.cache[key];
+	}
+	reset() {
+		this.cache = {};
+	}
+	load(cacheObj) {
+		this.cache = {
+			...this.cache,
+			...cacheObj
+		};
+	}
+};
 
-/* END TYPES */
-function readFile(path) {
-  let res = "";
-  try {
-    res = fs.readFileSync(path, "utf8");
-    // eslint-disable-line @typescript-eslint/no-explicit-any
-  } catch (err) {
-    if ((err == null ? void 0 : err.code) === "ENOENT") {
-      throw new EtaFileResolutionError(`Could not find template: ${path}`);
-    } else {
-      throw err;
-    }
-  }
-  return res;
-}
-function resolvePath(templatePath, options) {
-  let resolvedFilePath = "";
-  const views = this.config.views;
-  if (!views) {
-    throw new EtaFileResolutionError("Views directory is not defined");
-  }
-  const baseFilePath = options && options.filepath;
-  const defaultExtension = this.config.defaultExtension === undefined ? ".eta" : this.config.defaultExtension;
-  // how we index cached template paths
-  const cacheIndex = JSON.stringify({
-    filename: baseFilePath,
-    path: templatePath,
-    views: this.config.views
-  });
-  templatePath += path.extname(templatePath) ? "" : defaultExtension;
-  // if the file was included from another template
-  if (baseFilePath) {
-    // check the cache
-    if (this.config.cacheFilepaths && this.filepathCache[cacheIndex]) {
-      return this.filepathCache[cacheIndex];
-    }
-    const absolutePathTest = absolutePathRegExp.exec(templatePath);
-    if (absolutePathTest && absolutePathTest.length) {
-      const formattedPath = templatePath.replace(/^\/*|^\\*/, "");
-      resolvedFilePath = path.join(views, formattedPath);
-    } else {
-      resolvedFilePath = path.join(path.dirname(baseFilePath), templatePath);
-    }
-  } else {
-    resolvedFilePath = path.join(views, templatePath);
-  }
-  if (dirIsChild(views, resolvedFilePath)) {
-    // add resolved path to the cache
-    if (baseFilePath && this.config.cacheFilepaths) {
-      this.filepathCache[cacheIndex] = resolvedFilePath;
-    }
-    return resolvedFilePath;
-  } else {
-    throw new EtaFileResolutionError(`Template '${templatePath}' is not in the views directory`);
-  }
-}
-function dirIsChild(parent, dir) {
-  const relative = path.relative(parent, dir);
-  return relative && !relative.startsWith("..") && !path.isAbsolute(relative);
-}
-const absolutePathRegExp = /^\\|^\//;
+//#endregion
+//#region src/internal.ts
+var Eta$1 = class {
+	constructor(customConfig) {
+		if (customConfig) this.config = {
+			...defaultConfig,
+			...customConfig
+		};
+		else this.config = { ...defaultConfig };
+	}
+	config;
+	RuntimeErr = RuntimeErr;
+	compile = compile;
+	compileToString = compileToString;
+	compileBody = compileBody;
+	parse = parse;
+	render = render;
+	renderAsync = renderAsync;
+	renderString = renderString;
+	renderStringAsync = renderStringAsync;
+	filepathCache = {};
+	templatesSync = new Cacher({});
+	templatesAsync = new Cacher({});
+	resolvePath = null;
+	readFile = null;
+	configure(customConfig) {
+		this.config = {
+			...this.config,
+			...customConfig
+		};
+	}
+	withConfig(customConfig) {
+		return {
+			...this,
+			config: {
+				...this.config,
+				...customConfig
+			}
+		};
+	}
+	loadTemplate(name, template, options) {
+		if (typeof template === "string") (options?.async ? this.templatesAsync : this.templatesSync).define(name, this.compile(template, options));
+		else {
+			let templates = this.templatesSync;
+			if (template.constructor.name === "AsyncFunction" || options?.async) templates = this.templatesAsync;
+			templates.define(name, template);
+		}
+	}
+};
 
-class Eta extends Eta$1 {
-  constructor(...args) {
-    super(...args);
-    this.readFile = readFile;
-    this.resolvePath = resolvePath;
-  }
-}
+//#endregion
+//#region src/index.ts
+var Eta = class extends Eta$1 {
+	readFile = readFile;
+	resolvePath = resolvePath;
+};
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

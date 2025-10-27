@@ -55,7 +55,8 @@ export default [
 
       parserOptions: {
         project: ['tsconfig.eslint.json'],
-        tsconfigRootDir: '.'
+        // Use absolute directory to satisfy @typescript-eslint/parser requirement
+        tsconfigRootDir: __dirname
       }
     },
 

@@ -15,7 +15,6 @@ creates a report as an issue in the repository where it is running.
   [GitHub Actions secret](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository)
   in the repository that is using this action. This token should have the
   following scopes:
-
   - `admin:enterprise`
   - `admin:org`
 
