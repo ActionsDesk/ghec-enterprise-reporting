@@ -60,8 +60,8 @@
     "@actions/github": "^6.0.1",
     "@octokit/plugin-enterprise-cloud": "^15.0.0",
     "@octokit/plugin-paginate-rest": "^13.0.1",
-    "@octokit/plugin-throttling": "^11.0.1",
-    "@octokit/rest": "^22.0.0",
+    "@octokit/plugin-throttling": "^11.0.3",
+    "@octokit/rest": "^22.0.1",
     "eta": "^3.5.0",
     "moment": "^2.30.1"
   },
