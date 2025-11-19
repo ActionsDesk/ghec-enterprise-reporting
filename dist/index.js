@@ -14,16 +14,18 @@ import require$$0$5 from 'stream';
 import require$$7 from 'buffer';
 import require$$8 from 'querystring';
 import require$$14 from 'stream/web';
-import { createRequire } from 'node:module';
-import require$$0$6 from 'worker_threads';
+import require$$0$7 from 'node:stream';
+import require$$1$3 from 'node:util';
+import require$$0$6 from 'node:events';
+import require$$0$8 from 'worker_threads';
 import require$$2$2 from 'perf_hooks';
 import require$$5 from 'util/types';
 import require$$4$2 from 'async_hooks';
-import require$$1$3 from 'console';
-import require$$1$4, { fileURLToPath } from 'url';
+import require$$1$4 from 'console';
+import require$$1$5, { fileURLToPath } from 'url';
 import require$$3$2 from 'zlib';
 import require$$6 from 'string_decoder';
-import require$$0$7 from 'diagnostics_channel';
+import require$$0$9 from 'diagnostics_channel';
 import require$$2$3 from 'child_process';
 import require$$6$1 from 'timers';
 import * as fs from 'node:fs';
@@ -1754,15 +1756,6 @@ function requireTimers () {
 
 var main = {exports: {}};
 
-const require$3 = createRequire(import.meta.url);
-function __require$2() { return require$3("node:stream"); }
-
-const require$2 = createRequire(import.meta.url);
-function __require$1() { return require$2("node:util"); }
-
-const require$1 = createRequire(import.meta.url);
-function __require() { return require$1("node:events"); }
-
 var sbmh;
 var hasRequiredSbmh;
 
@@ -1796,8 +1789,8 @@ function requireSbmh () {
 	 * Based heavily on the Streaming Boyer-Moore-Horspool C++ implementation
 	 * by Hongli Lai at: https://github.com/FooBarWidget/boyer-moore-horspool
 	 */
-	const EventEmitter = __require().EventEmitter;
-	const inherits = __require$1().inherits;
+	const EventEmitter = require$$0$6.EventEmitter;
+	const inherits = require$$1$3.inherits;
 
 	function SBMH (needle) {
 	  if (typeof needle === 'string') {
@@ -2006,8 +1999,8 @@ function requirePartStream () {
 	if (hasRequiredPartStream) return PartStream_1;
 	hasRequiredPartStream = 1;
 
-	const inherits = __require$1().inherits;
-	const ReadableStream = __require$2().Readable;
+	const inherits = require$$1$3.inherits;
+	const ReadableStream = require$$0$7.Readable;
 
 	function PartStream (opts) {
 	  ReadableStream.call(this, opts);
@@ -2051,8 +2044,8 @@ function requireHeaderParser () {
 	if (hasRequiredHeaderParser) return HeaderParser_1;
 	hasRequiredHeaderParser = 1;
 
-	const EventEmitter = __require().EventEmitter;
-	const inherits = __require$1().inherits;
+	const EventEmitter = require$$0$6.EventEmitter;
+	const inherits = require$$1$3.inherits;
 	const getLimit = requireGetLimit();
 
 	const StreamSearch = requireSbmh();
@@ -2159,8 +2152,8 @@ function requireDicer () {
 	if (hasRequiredDicer) return Dicer_1;
 	hasRequiredDicer = 1;
 
-	const WritableStream = __require$2().Writable;
-	const inherits = __require$1().inherits;
+	const WritableStream = require$$0$7.Writable;
+	const inherits = require$$1$3.inherits;
 
 	const StreamSearch = requireSbmh();
 
@@ -2736,8 +2729,8 @@ function requireMultipart () {
 	//  * support limits.fieldNameSize
 	//     -- this will require modifications to utils.parseParams
 
-	const { Readable } = __require$2();
-	const { inherits } = __require$1();
+	const { Readable } = require$$0$7;
+	const { inherits } = require$$1$3;
 
 	const Dicer = requireDicer();
 
@@ -3302,8 +3295,8 @@ function requireMain () {
 	if (hasRequiredMain) return main.exports;
 	hasRequiredMain = 1;
 
-	const WritableStream = __require$2().Writable;
-	const { inherits } = __require$1();
+	const WritableStream = require$$0$7.Writable;
+	const { inherits } = require$$1$3;
 	const Dicer = requireDicer();
 
 	const MultipartParser = requireMultipart();
@@ -3395,7 +3388,7 @@ function requireConstants$3 () {
 	if (hasRequiredConstants$3) return constants$3;
 	hasRequiredConstants$3 = 1;
 
-	const { MessageChannel, receiveMessageOnPort } = require$$0$6;
+	const { MessageChannel, receiveMessageOnPort } = require$$0$8;
 
 	const corsSafeListedMethods = ['GET', 'HEAD', 'POST'];
 	const corsSafeListedMethodsSet = new Set(corsSafeListedMethods);
@@ -14151,7 +14144,7 @@ function requirePendingInterceptorsFormatter () {
 	hasRequiredPendingInterceptorsFormatter = 1;
 
 	const { Transform } = require$$0$5;
-	const { Console } = require$$1$3;
+	const { Console } = require$$1$4;
 
 	/**
 	 * Gets the output of `console.table(…)` as a string.
@@ -14378,7 +14371,7 @@ function requireProxyAgent () {
 	hasRequiredProxyAgent = 1;
 
 	const { kProxy, kClose, kDestroy, kInterceptors } = requireSymbols$4();
-	const { URL } = require$$1$4;
+	const { URL } = require$$1$5;
 	const Agent = requireAgent();
 	const Pool = requirePool();
 	const DispatcherBase = requireDispatcherBase();
@@ -22328,7 +22321,7 @@ function requireEvents () {
 
 	const { webidl } = requireWebidl();
 	const { kEnumerableProperty } = requireUtil$6();
-	const { MessagePort } = require$$0$6;
+	const { MessagePort } = require$$0$8;
 
 	/**
 	 * @see https://html.spec.whatwg.org/multipage/comms.html#messageevent
@@ -22845,7 +22838,7 @@ function requireConnection () {
 	if (hasRequiredConnection) return connection;
 	hasRequiredConnection = 1;
 
-	const diagnosticsChannel = require$$0$7;
+	const diagnosticsChannel = require$$0$9;
 	const { uid, states } = requireConstants();
 	const {
 	  kReadyState,
@@ -23226,7 +23219,7 @@ function requireReceiver () {
 	hasRequiredReceiver = 1;
 
 	const { Writable } = require$$0$5;
-	const diagnosticsChannel = require$$0$7;
+	const diagnosticsChannel = require$$0$9;
 	const { parserStates, opcodes, states, emptyBuffer } = requireConstants();
 	const { kReadyState, kSentClose, kResponse, kReceivedClose } = requireSymbols();
 	const { isValidStatusCode, failWebsocketConnection, websocketMessageReceived } = requireUtil();
@@ -37680,7 +37673,7 @@ class RequestError extends Error {
 // pkg/dist-src/index.js
 
 // pkg/dist-src/version.js
-var VERSION$7 = "10.0.5";
+var VERSION$7 = "10.0.6";
 
 // pkg/dist-src/defaults.js
 var defaults_default = {
@@ -38045,7 +38038,7 @@ var createTokenAuth = function createTokenAuth2(token) {
   });
 };
 
-const VERSION$5 = "7.0.5";
+const VERSION$5 = "7.0.6";
 
 const noop = () => {
 };
@@ -39041,7 +39034,7 @@ function paginateRest(octokit) {
 }
 paginateRest.VERSION = VERSION$2;
 
-const VERSION$1 = "16.0.0";
+const VERSION$1 = "17.0.0";
 
 const Endpoints = {
   actions: {
@@ -39100,6 +39093,12 @@ const Endpoints = {
     ],
     deleteArtifact: [
       "DELETE /repos/{owner}/{repo}/actions/artifacts/{artifact_id}"
+    ],
+    deleteCustomImageFromOrg: [
+      "DELETE /orgs/{org}/actions/hosted-runners/images/custom/{image_definition_id}"
+    ],
+    deleteCustomImageVersionFromOrg: [
+      "DELETE /orgs/{org}/actions/hosted-runners/images/custom/{image_definition_id}/versions/{version}"
     ],
     deleteEnvironmentSecret: [
       "DELETE /repos/{owner}/{repo}/environments/{environment_name}/secrets/{secret_name}"
@@ -39174,6 +39173,12 @@ const Endpoints = {
       "GET /repos/{owner}/{repo}/actions/permissions/selected-actions"
     ],
     getArtifact: ["GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}"],
+    getCustomImageForOrg: [
+      "GET /orgs/{org}/actions/hosted-runners/images/custom/{image_definition_id}"
+    ],
+    getCustomImageVersionForOrg: [
+      "GET /orgs/{org}/actions/hosted-runners/images/custom/{image_definition_id}/versions/{version}"
+    ],
     getCustomOidcSubClaimForRepo: [
       "GET /repos/{owner}/{repo}/actions/oidc/customization/sub"
     ],
@@ -39253,6 +39258,12 @@ const Endpoints = {
       "GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing"
     ],
     listArtifactsForRepo: ["GET /repos/{owner}/{repo}/actions/artifacts"],
+    listCustomImageVersionsForOrg: [
+      "GET /orgs/{org}/actions/hosted-runners/images/custom/{image_definition_id}/versions"
+    ],
+    listCustomImagesForOrg: [
+      "GET /orgs/{org}/actions/hosted-runners/images/custom"
+    ],
     listEnvironmentSecrets: [
       "GET /repos/{owner}/{repo}/environments/{environment_name}/secrets"
     ],
@@ -39510,6 +39521,12 @@ const Endpoints = {
     getGithubActionsBillingOrg: ["GET /orgs/{org}/settings/billing/actions"],
     getGithubActionsBillingUser: [
       "GET /users/{username}/settings/billing/actions"
+    ],
+    getGithubBillingPremiumRequestUsageReportOrg: [
+      "GET /organizations/{org}/settings/billing/premium_request/usage"
+    ],
+    getGithubBillingPremiumRequestUsageReportUser: [
+      "GET /users/{username}/settings/billing/premium_request/usage"
     ],
     getGithubBillingUsageReportOrg: [
       "GET /organizations/{org}/settings/billing/usage"
@@ -39852,11 +39869,20 @@ const Endpoints = {
     removeSelectedRepoFromOrgSecret: [
       "DELETE /orgs/{org}/dependabot/secrets/{secret_name}/repositories/{repository_id}"
     ],
+    repositoryAccessForOrg: [
+      "GET /organizations/{org}/dependabot/repository-access"
+    ],
+    setRepositoryAccessDefaultLevel: [
+      "PUT /organizations/{org}/dependabot/repository-access/default-level"
+    ],
     setSelectedReposForOrgSecret: [
       "PUT /orgs/{org}/dependabot/secrets/{secret_name}/repositories"
     ],
     updateAlert: [
       "PATCH /repos/{owner}/{repo}/dependabot/alerts/{alert_number}"
+    ],
+    updateRepositoryAccessForOrg: [
+      "PATCH /organizations/{org}/dependabot/repository-access"
     ]
   },
   dependencyGraph: {
@@ -39869,6 +39895,51 @@ const Endpoints = {
     exportSbom: ["GET /repos/{owner}/{repo}/dependency-graph/sbom"]
   },
   emojis: { get: ["GET /emojis"] },
+  enterpriseTeamMemberships: {
+    add: [
+      "PUT /enterprises/{enterprise}/teams/{enterprise-team}/memberships/{username}"
+    ],
+    bulkAdd: [
+      "POST /enterprises/{enterprise}/teams/{enterprise-team}/memberships/add"
+    ],
+    bulkRemove: [
+      "POST /enterprises/{enterprise}/teams/{enterprise-team}/memberships/remove"
+    ],
+    get: [
+      "GET /enterprises/{enterprise}/teams/{enterprise-team}/memberships/{username}"
+    ],
+    list: ["GET /enterprises/{enterprise}/teams/{enterprise-team}/memberships"],
+    remove: [
+      "DELETE /enterprises/{enterprise}/teams/{enterprise-team}/memberships/{username}"
+    ]
+  },
+  enterpriseTeamOrganizations: {
+    add: [
+      "PUT /enterprises/{enterprise}/teams/{enterprise-team}/organizations/{org}"
+    ],
+    bulkAdd: [
+      "POST /enterprises/{enterprise}/teams/{enterprise-team}/organizations/add"
+    ],
+    bulkRemove: [
+      "POST /enterprises/{enterprise}/teams/{enterprise-team}/organizations/remove"
+    ],
+    delete: [
+      "DELETE /enterprises/{enterprise}/teams/{enterprise-team}/organizations/{org}"
+    ],
+    getAssignment: [
+      "GET /enterprises/{enterprise}/teams/{enterprise-team}/organizations/{org}"
+    ],
+    getAssignments: [
+      "GET /enterprises/{enterprise}/teams/{enterprise-team}/organizations"
+    ]
+  },
+  enterpriseTeams: {
+    create: ["POST /enterprises/{enterprise}/teams"],
+    delete: ["DELETE /enterprises/{enterprise}/teams/{team_slug}"],
+    get: ["GET /enterprises/{enterprise}/teams/{team_slug}"],
+    list: ["GET /enterprises/{enterprise}/teams"],
+    update: ["PATCH /enterprises/{enterprise}/teams/{team_slug}"]
+  },
   gists: {
     checkIsStarred: ["GET /gists/{gist_id}/star"],
     create: ["POST /gists"],
@@ -39962,6 +40033,9 @@ const Endpoints = {
     addAssignees: [
       "POST /repos/{owner}/{repo}/issues/{issue_number}/assignees"
     ],
+    addBlockedByDependency: [
+      "POST /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocked_by"
+    ],
     addLabels: ["POST /repos/{owner}/{repo}/issues/{issue_number}/labels"],
     addSubIssue: [
       "POST /repos/{owner}/{repo}/issues/{issue_number}/sub_issues"
@@ -39988,10 +40062,17 @@ const Endpoints = {
     getEvent: ["GET /repos/{owner}/{repo}/issues/events/{event_id}"],
     getLabel: ["GET /repos/{owner}/{repo}/labels/{name}"],
     getMilestone: ["GET /repos/{owner}/{repo}/milestones/{milestone_number}"],
+    getParent: ["GET /repos/{owner}/{repo}/issues/{issue_number}/parent"],
     list: ["GET /issues"],
     listAssignees: ["GET /repos/{owner}/{repo}/assignees"],
     listComments: ["GET /repos/{owner}/{repo}/issues/{issue_number}/comments"],
     listCommentsForRepo: ["GET /repos/{owner}/{repo}/issues/comments"],
+    listDependenciesBlockedBy: [
+      "GET /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocked_by"
+    ],
+    listDependenciesBlocking: [
+      "GET /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocking"
+    ],
     listEvents: ["GET /repos/{owner}/{repo}/issues/{issue_number}/events"],
     listEventsForRepo: ["GET /repos/{owner}/{repo}/issues/events"],
     listEventsForTimeline: [
@@ -40017,6 +40098,9 @@ const Endpoints = {
     ],
     removeAssignees: [
       "DELETE /repos/{owner}/{repo}/issues/{issue_number}/assignees"
+    ],
+    removeDependencyBlockedBy: [
+      "DELETE /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocked_by/{issue_id}"
     ],
     removeLabel: [
       "DELETE /repos/{owner}/{repo}/issues/{issue_number}/labels/{name}"
@@ -40120,30 +40204,61 @@ const Endpoints = {
     convertMemberToOutsideCollaborator: [
       "PUT /orgs/{org}/outside_collaborators/{username}"
     ],
+    createArtifactStorageRecord: [
+      "POST /orgs/{org}/artifacts/metadata/storage-record"
+    ],
     createInvitation: ["POST /orgs/{org}/invitations"],
     createIssueType: ["POST /orgs/{org}/issue-types"],
-    createOrUpdateCustomProperties: ["PATCH /orgs/{org}/properties/schema"],
-    createOrUpdateCustomPropertiesValuesForRepos: [
-      "PATCH /orgs/{org}/properties/values"
+    createWebhook: ["POST /orgs/{org}/hooks"],
+    customPropertiesForOrgsCreateOrUpdateOrganizationValues: [
+      "PATCH /organizations/{org}/org-properties/values"
     ],
-    createOrUpdateCustomProperty: [
+    customPropertiesForOrgsGetOrganizationValues: [
+      "GET /organizations/{org}/org-properties/values"
+    ],
+    customPropertiesForReposCreateOrUpdateOrganizationDefinition: [
       "PUT /orgs/{org}/properties/schema/{custom_property_name}"
     ],
-    createWebhook: ["POST /orgs/{org}/hooks"],
+    customPropertiesForReposCreateOrUpdateOrganizationDefinitions: [
+      "PATCH /orgs/{org}/properties/schema"
+    ],
+    customPropertiesForReposCreateOrUpdateOrganizationValues: [
+      "PATCH /orgs/{org}/properties/values"
+    ],
+    customPropertiesForReposDeleteOrganizationDefinition: [
+      "DELETE /orgs/{org}/properties/schema/{custom_property_name}"
+    ],
+    customPropertiesForReposGetOrganizationDefinition: [
+      "GET /orgs/{org}/properties/schema/{custom_property_name}"
+    ],
+    customPropertiesForReposGetOrganizationDefinitions: [
+      "GET /orgs/{org}/properties/schema"
+    ],
+    customPropertiesForReposGetOrganizationValues: [
+      "GET /orgs/{org}/properties/values"
+    ],
     delete: ["DELETE /orgs/{org}"],
+    deleteAttestationsBulk: ["POST /orgs/{org}/attestations/delete-request"],
+    deleteAttestationsById: [
+      "DELETE /orgs/{org}/attestations/{attestation_id}"
+    ],
+    deleteAttestationsBySubjectDigest: [
+      "DELETE /orgs/{org}/attestations/digest/{subject_digest}"
+    ],
     deleteIssueType: ["DELETE /orgs/{org}/issue-types/{issue_type_id}"],
     deleteWebhook: ["DELETE /orgs/{org}/hooks/{hook_id}"],
-    enableOrDisableSecurityProductOnAllOrgRepos: [
-      "POST /orgs/{org}/{security_product}/{enablement}",
-      {},
-      {
-        deprecated: "octokit.rest.orgs.enableOrDisableSecurityProductOnAllOrgRepos() is deprecated, see https://docs.github.com/rest/orgs/orgs#enable-or-disable-a-security-feature-for-an-organization"
-      }
+    disableSelectedRepositoryImmutableReleasesOrganization: [
+      "DELETE /orgs/{org}/settings/immutable-releases/repositories/{repository_id}"
+    ],
+    enableSelectedRepositoryImmutableReleasesOrganization: [
+      "PUT /orgs/{org}/settings/immutable-releases/repositories/{repository_id}"
     ],
     get: ["GET /orgs/{org}"],
-    getAllCustomProperties: ["GET /orgs/{org}/properties/schema"],
-    getCustomProperty: [
-      "GET /orgs/{org}/properties/schema/{custom_property_name}"
+    getImmutableReleasesSettings: [
+      "GET /orgs/{org}/settings/immutable-releases"
+    ],
+    getImmutableReleasesSettingsRepositories: [
+      "GET /orgs/{org}/settings/immutable-releases/repositories"
     ],
     getMembershipForAuthenticatedUser: ["GET /user/memberships/orgs/{org}"],
     getMembershipForUser: ["GET /orgs/{org}/memberships/{username}"],
@@ -40159,9 +40274,15 @@ const Endpoints = {
     ],
     list: ["GET /organizations"],
     listAppInstallations: ["GET /orgs/{org}/installations"],
+    listArtifactStorageRecords: [
+      "GET /orgs/{org}/artifacts/{subject_digest}/metadata/storage-records"
+    ],
+    listAttestationRepositories: ["GET /orgs/{org}/attestations/repositories"],
     listAttestations: ["GET /orgs/{org}/attestations/{subject_digest}"],
+    listAttestationsBulk: [
+      "POST /orgs/{org}/attestations/bulk-list{?per_page,before,after}"
+    ],
     listBlockedUsers: ["GET /orgs/{org}/blocks"],
-    listCustomPropertiesValuesForRepos: ["GET /orgs/{org}/properties/values"],
     listFailedInvitations: ["GET /orgs/{org}/failed_invitations"],
     listForAuthenticatedUser: ["GET /user/orgs"],
     listForUser: ["GET /users/{username}/orgs"],
@@ -40199,9 +40320,6 @@ const Endpoints = {
     redeliverWebhookDelivery: [
       "POST /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}/attempts"
     ],
-    removeCustomProperty: [
-      "DELETE /orgs/{org}/properties/schema/{custom_property_name}"
-    ],
     removeMember: ["DELETE /orgs/{org}/members/{username}"],
     removeMembershipForUser: ["DELETE /orgs/{org}/memberships/{username}"],
     removeOutsideCollaborator: [
@@ -40234,6 +40352,12 @@ const Endpoints = {
     ],
     revokeOrgRoleUser: [
       "DELETE /orgs/{org}/organization-roles/users/{username}/{role_id}"
+    ],
+    setImmutableReleasesSettings: [
+      "PUT /orgs/{org}/settings/immutable-releases"
+    ],
+    setImmutableReleasesSettingsRepositories: [
+      "PUT /orgs/{org}/settings/immutable-releases/repositories"
     ],
     setMembershipForUser: ["PUT /orgs/{org}/memberships/{username}"],
     setPublicMembershipForAuthenticatedUser: [
@@ -40352,6 +40476,46 @@ const Endpoints = {
     listOrgPrivateRegistries: ["GET /orgs/{org}/private-registries"],
     updateOrgPrivateRegistry: [
       "PATCH /orgs/{org}/private-registries/{secret_name}"
+    ]
+  },
+  projects: {
+    addItemForOrg: ["POST /orgs/{org}/projectsV2/{project_number}/items"],
+    addItemForUser: [
+      "POST /users/{username}/projectsV2/{project_number}/items"
+    ],
+    deleteItemForOrg: [
+      "DELETE /orgs/{org}/projectsV2/{project_number}/items/{item_id}"
+    ],
+    deleteItemForUser: [
+      "DELETE /users/{username}/projectsV2/{project_number}/items/{item_id}"
+    ],
+    getFieldForOrg: [
+      "GET /orgs/{org}/projectsV2/{project_number}/fields/{field_id}"
+    ],
+    getFieldForUser: [
+      "GET /users/{username}/projectsV2/{project_number}/fields/{field_id}"
+    ],
+    getForOrg: ["GET /orgs/{org}/projectsV2/{project_number}"],
+    getForUser: ["GET /users/{username}/projectsV2/{project_number}"],
+    getOrgItem: ["GET /orgs/{org}/projectsV2/{project_number}/items/{item_id}"],
+    getUserItem: [
+      "GET /users/{username}/projectsV2/{project_number}/items/{item_id}"
+    ],
+    listFieldsForOrg: ["GET /orgs/{org}/projectsV2/{project_number}/fields"],
+    listFieldsForUser: [
+      "GET /users/{username}/projectsV2/{project_number}/fields"
+    ],
+    listForOrg: ["GET /orgs/{org}/projectsV2"],
+    listForUser: ["GET /users/{username}/projectsV2"],
+    listItemsForOrg: ["GET /orgs/{org}/projectsV2/{project_number}/items"],
+    listItemsForUser: [
+      "GET /users/{username}/projectsV2/{project_number}/items"
+    ],
+    updateItemForOrg: [
+      "PATCH /orgs/{org}/projectsV2/{project_number}/items/{item_id}"
+    ],
+    updateItemForUser: [
+      "PATCH /users/{username}/projectsV2/{project_number}/items/{item_id}"
     ]
   },
   pulls: {
@@ -40514,6 +40678,7 @@ const Endpoints = {
       "GET /repos/{owner}/{repo}/automated-security-fixes"
     ],
     checkCollaborator: ["GET /repos/{owner}/{repo}/collaborators/{username}"],
+    checkImmutableReleases: ["GET /repos/{owner}/{repo}/immutable-releases"],
     checkPrivateVulnerabilityReporting: [
       "GET /repos/{owner}/{repo}/private-vulnerability-reporting"
     ],
@@ -40549,9 +40714,6 @@ const Endpoints = {
     createForAuthenticatedUser: ["POST /user/repos"],
     createFork: ["POST /repos/{owner}/{repo}/forks"],
     createInOrg: ["POST /orgs/{org}/repos"],
-    createOrUpdateCustomPropertiesValues: [
-      "PATCH /repos/{owner}/{repo}/properties/values"
-    ],
     createOrUpdateEnvironment: [
       "PUT /repos/{owner}/{repo}/environments/{environment_name}"
     ],
@@ -40565,6 +40727,12 @@ const Endpoints = {
       "POST /repos/{template_owner}/{template_repo}/generate"
     ],
     createWebhook: ["POST /repos/{owner}/{repo}/hooks"],
+    customPropertiesForReposCreateOrUpdateRepositoryValues: [
+      "PATCH /repos/{owner}/{repo}/properties/values"
+    ],
+    customPropertiesForReposGetRepositoryValues: [
+      "GET /repos/{owner}/{repo}/properties/values"
+    ],
     declineInvitation: [
       "DELETE /user/repository_invitations/{invitation_id}",
       {},
@@ -40619,6 +40787,9 @@ const Endpoints = {
     disableDeploymentProtectionRule: [
       "DELETE /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/{protection_rule_id}"
     ],
+    disableImmutableReleases: [
+      "DELETE /repos/{owner}/{repo}/immutable-releases"
+    ],
     disablePrivateVulnerabilityReporting: [
       "DELETE /repos/{owner}/{repo}/private-vulnerability-reporting"
     ],
@@ -40635,6 +40806,7 @@ const Endpoints = {
     enableAutomatedSecurityFixes: [
       "PUT /repos/{owner}/{repo}/automated-security-fixes"
     ],
+    enableImmutableReleases: ["PUT /repos/{owner}/{repo}/immutable-releases"],
     enablePrivateVulnerabilityReporting: [
       "PUT /repos/{owner}/{repo}/private-vulnerability-reporting"
     ],
@@ -40686,7 +40858,6 @@ const Endpoints = {
     getCustomDeploymentProtectionRule: [
       "GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/{protection_rule_id}"
     ],
-    getCustomPropertiesValues: ["GET /repos/{owner}/{repo}/properties/values"],
     getDeployKey: ["GET /repos/{owner}/{repo}/keys/{key_id}"],
     getDeployment: ["GET /repos/{owner}/{repo}/deployments/{deployment_id}"],
     getDeploymentBranchPolicy: [
@@ -40904,13 +41075,7 @@ const Endpoints = {
   search: {
     code: ["GET /search/code"],
     commits: ["GET /search/commits"],
-    issuesAndPullRequests: [
-      "GET /search/issues",
-      {},
-      {
-        deprecated: "octokit.rest.search.issuesAndPullRequests() is deprecated, see https://docs.github.com/rest/search/search#search-issues-and-pull-requests"
-      }
-    ],
+    issuesAndPullRequests: ["GET /search/issues"],
     labels: ["GET /search/labels"],
     repos: ["GET /search/repositories"],
     topics: ["GET /search/topics"],
@@ -40924,16 +41089,19 @@ const Endpoints = {
       "GET /repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}"
     ],
     getScanHistory: ["GET /repos/{owner}/{repo}/secret-scanning/scan-history"],
-    listAlertsForEnterprise: [
-      "GET /enterprises/{enterprise}/secret-scanning/alerts"
-    ],
     listAlertsForOrg: ["GET /orgs/{org}/secret-scanning/alerts"],
     listAlertsForRepo: ["GET /repos/{owner}/{repo}/secret-scanning/alerts"],
     listLocationsForAlert: [
       "GET /repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}/locations"
     ],
+    listOrgPatternConfigs: [
+      "GET /orgs/{org}/secret-scanning/pattern-configurations"
+    ],
     updateAlert: [
       "PATCH /repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}"
+    ],
+    updateOrgPatternConfigs: [
+      "PATCH /orgs/{org}/secret-scanning/pattern-configurations"
     ]
   },
   securityAdvisories: {
@@ -41043,6 +41211,15 @@ const Endpoints = {
     ],
     createPublicSshKeyForAuthenticatedUser: ["POST /user/keys"],
     createSshSigningKeyForAuthenticatedUser: ["POST /user/ssh_signing_keys"],
+    deleteAttestationsBulk: [
+      "POST /users/{username}/attestations/delete-request"
+    ],
+    deleteAttestationsById: [
+      "DELETE /users/{username}/attestations/{attestation_id}"
+    ],
+    deleteAttestationsBySubjectDigest: [
+      "DELETE /users/{username}/attestations/digest/{subject_digest}"
+    ],
     deleteEmailForAuthenticated: [
       "DELETE /user/emails",
       {},
@@ -41087,6 +41264,9 @@ const Endpoints = {
     ],
     list: ["GET /users"],
     listAttestations: ["GET /users/{username}/attestations/{subject_digest}"],
+    listAttestationsBulk: [
+      "POST /users/{username}/attestations/bulk-list{?per_page,before,after}"
+    ],
     listBlockedByAuthenticated: [
       "GET /user/blocks",
       {},
@@ -41278,7 +41458,7 @@ function legacyRestEndpointMethods(octokit) {
 }
 legacyRestEndpointMethods.VERSION = VERSION$1;
 
-const VERSION = "22.0.0";
+const VERSION = "22.0.1";
 
 const Octokit = Octokit$1.plugin(requestLog, legacyRestEndpointMethods, paginateRest).defaults(
   {
