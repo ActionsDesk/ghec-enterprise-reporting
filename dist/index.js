@@ -38879,7 +38879,7 @@ function deprecate(octokit, deprecation, defaults) {
   const requestWithDefaults = octokit.request.defaults(defaults);
   function deprecated(...args) {
     octokit.log.warn(deprecation);
-    return requestWithDefaults(...args);
+    return requestWithDefaults.apply(null, args);
   }
   return Object.assign(deprecated, requestWithDefaults);
 }
