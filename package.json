@@ -58,10 +58,10 @@
   "dependencies": {
     "@actions/core": "^1.11.1",
     "@actions/github": "^6.0.1",
-    "@octokit/plugin-enterprise-cloud": "^15.2.0",
+    "@octokit/plugin-enterprise-cloud": "^15.2.1",
     "@octokit/plugin-paginate-rest": "^13.2.1",
-    "@octokit/plugin-throttling": "^11.0.2",
-    "@octokit/rest": "^22.0.0",
+    "@octokit/plugin-throttling": "^11.0.3",
+    "@octokit/rest": "^22.0.1",
     "eta": "^4.0.1",
     "moment": "^2.30.1"
   },
