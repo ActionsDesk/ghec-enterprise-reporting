@@ -24,13 +24,13 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           fetch-tags: true
 
       - name: Tag
         id: tag
-        uses: issue-ops/semver@v3
+        uses: issue-ops/semver@e58d2f490332e0310a78e9a0e935d8d6f898e9e3 # v3.0.0
         with:
           manifest-path: package.json
           workspace: ${{ github.workspace }}
