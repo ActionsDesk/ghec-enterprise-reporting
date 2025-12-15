@@ -62,7 +62,7 @@
     "@octokit/plugin-paginate-rest": "^14.0.0",
     "@octokit/plugin-throttling": "^11.0.3",
     "@octokit/rest": "^22.0.1",
-    "eta": "^4.4.1",
+    "eta": "^4.5.0",
     "moment": "^2.30.1"
   },
   "devDependencies": {
