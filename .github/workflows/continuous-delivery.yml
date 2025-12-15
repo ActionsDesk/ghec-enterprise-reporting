@@ -38,6 +38,6 @@ jobs:
 
       - name: Create Release
         id: release
-        uses: issue-ops/releaser@v3
+        uses: issue-ops/releaser@41bcc03658669135298bb08b60f043f1e02bf10e #v3.0.0
         with:
           tag: v${{ steps.tag.outputs.version }}
