@@ -56,7 +56,7 @@
     "all": "npm run format:write && npm run lint && npm run test && npm run coverage && npm run package"
   },
   "dependencies": {
-    "@actions/core": "^1.11.1",
+    "@actions/core": "^2.0.1",
     "@actions/github": "^6.0.1",
     "@octokit/plugin-enterprise-cloud": "^15.2.1",
     "@octokit/plugin-paginate-rest": "^14.0.0",
