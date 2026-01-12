@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "@actions/core": "^2.0.1",
-    "@actions/github": "^6.0.1",
+    "@actions/github": "^7.0.0",
     "@octokit/plugin-enterprise-cloud": "^15.2.1",
     "@octokit/plugin-paginate-rest": "^14.0.0",
     "@octokit/plugin-throttling": "^11.0.3",
