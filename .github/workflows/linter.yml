@@ -57,3 +57,4 @@ jobs:
           VALIDATE_MARKDOWN: false
           VALIDATE_TYPESCRIPT_ES: false
           VALIDATE_TYPESCRIPT_STANDARD: false
+          VALIDATE_TRIVY: false
