@@ -1,4 +1,4 @@
-import { getOctokitOptions } from '@actions/github/lib/utils.js'
+import { getOctokitOptions } from '@actions/github/lib/utils'
 import { enterpriseCloud } from '@octokit/plugin-enterprise-cloud'
 import { Octokit } from '@octokit/rest'
 import { Eta } from 'eta'
